@@ -1,5 +1,5 @@
 import React from 'react';
-import './App.css';
+import styles from './App.module.scss';
 
 type AddressType = {
   country: null | string,
@@ -23,8 +23,13 @@ console.log(state);
 
 function App() {
   return (
-    <div className="App">
-      asd
+    <div className={styles.App}>
+      <div className={styles.header}>
+        asd
+      </div>
+      <div className={styles.content}>
+        gfsd
+      </div>
     </div>
   );
 }
