@@ -1,6 +1,9 @@
 import React from 'react';
+import { Route } from 'react-router-dom';
 import styles from './App.module.scss';
 import Header from './components/Header/Header';
+import MainPage from './components/MainPage/MainPage';
+import ListPage from './components/ListPage/ListPage';
 
 type AddressType = {
   country: null | string,
@@ -30,8 +33,9 @@ function App() {
           <Header />
         </div>
         <div className={styles.content}>
-          gfsd
-      </div>
+          <Route path={'/main'} render={() => <MainPage />} />
+          <Route path={'/list/:listName'} render={() => <ListPage />} />
+        </div>
       </div>
     </div>
   );
