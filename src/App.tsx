@@ -1,5 +1,6 @@
 import React from 'react';
 import styles from './App.module.scss';
+import Header from './components/Header/Header';
 
 type AddressType = {
   country: null | string,
@@ -19,16 +20,18 @@ const state: initialStateType = {
     city: 'asda'
   }]
 }
-console.log(state);
+// console.log(state);
 
 function App() {
   return (
-    <div className={styles.App}>
-      <div className={styles.header}>
-        asd
+    <div className={styles.page}>
+      <div className={styles.wrapper}>
+        <div className={styles.header}>
+          <Header />
+        </div>
+        <div className={styles.content}>
+          gfsd
       </div>
-      <div className={styles.content}>
-        gfsd
       </div>
     </div>
   );
