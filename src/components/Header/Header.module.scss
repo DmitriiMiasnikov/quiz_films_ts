@@ -11,5 +11,11 @@
     height: inherit;
     display: flex;
     align-items: center;
+    text-decoration: none;
+    color: var(--font-link-1);
+    transition: .1s color;
+    &:hover {
+      color: var(--font-link-1-hover);
+    }
   }
 }

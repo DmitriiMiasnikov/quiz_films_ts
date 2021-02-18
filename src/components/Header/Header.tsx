@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { HeaderDom } from './HeaderDom';
 
 type Props = {
-  menuItems: any
+  menuItems: Array<{ text: string, link: string }>
 }
 
 const Header = (props: Props ) => {
