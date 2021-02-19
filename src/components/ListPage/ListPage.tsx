@@ -15,13 +15,13 @@ type Props = {
     ru: string,
     type: string,
     src: string,
-    question: Array<Question>
+    questions: Array<Question>
   }>
 }
 const ListPage = (props: Props) => {
 
   return (
-    <ListPageDom list={props.list}/>
+    <ListPageDom {...props}/>
   )
 }
 

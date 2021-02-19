@@ -1,6 +1,22 @@
 
+type Question = {
+  options: string[],
+  currect: string,
+  src: string
+}
 
-const initialStates = {
+type InitialStates = {
+  list: Array<{
+    name: string,
+    en: string,
+    ru: string,
+    type: string,
+    src: string,
+    questions: Array<Question>
+  }>
+}
+
+const initialStates: InitialStates = {
   list: [
     {
       "name": "top_250_films",

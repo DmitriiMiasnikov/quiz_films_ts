@@ -14,7 +14,7 @@ type Props = {
     ru: string,
     type: string,
     src: string,
-    question: Array<Question>
+    questions: Array<Question>
   }>
 }
 
@@ -23,7 +23,7 @@ export const ListPageDom = (props: Props) => {
     <div className={styles.wrapper}>
       {props.list.map((el: any, i: number) => {
         return (
-          <div key={styles.item}>
+          <div className={styles.item} key={i}>
             {el.en}
           </div>
         )
