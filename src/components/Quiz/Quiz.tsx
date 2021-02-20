@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
-import { withRouter } from 'react-router-dom';
+import { Redirect, withRouter } from 'react-router-dom';
 import { QuizDom } from './QuizDom';
-import { stepUp, checkAnswer, getResultText, toggleInactiveButtons } from './../../store/quizReducer';
+import { clear, stepUp, checkAnswer, getResultText, toggleInactiveButtons } from './../../store/quizReducer';
 
 
 const Quiz = (props: any) => {
@@ -26,6 +26,7 @@ const Quiz = (props: any) => {
       setAnswer(props.currentQuiz.questions.map(() => null))
       shuffleAnswers(props.currentQuiz)
     }
+    return () => props.clear()
   }, [])
 
   const checkAnswerFunc = async (answer: any, step: number, item: number) => {
@@ -48,6 +49,12 @@ const Quiz = (props: any) => {
       props.getResultText(right, all)
     }
   }, [hidePrevImage])
+
+  if (!props.currentQuiz) {
+    return (
+      <Redirect to={'/main'} />
+    )
+  }
   return (
     <QuizDom {...props} checkAnswerFunc={checkAnswerFunc} hidePrevImage={hidePrevImage} />
   )
@@ -63,4 +70,4 @@ const mapStatesToProps = (state: any) => {
   }
 }
 
-export default connect(mapStatesToProps, { stepUp, checkAnswer, getResultText, toggleInactiveButtons })(withRouter(Quiz));
+export default connect(mapStatesToProps, { clear, stepUp, checkAnswer, getResultText, toggleInactiveButtons })(withRouter(Quiz));

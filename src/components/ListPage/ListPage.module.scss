@@ -14,13 +14,13 @@
     margin: 25px 0 0 25px;
     &:hover {
       .image {
-        transform: scale(1.05);
+        transform: scale(1.05) translateZ(0);
       }
     }
     .image {
       max-width: 100%;
       min-height: 100%;
-      transform: scale(1);
+      transform: scale(1) translateZ(0);
       transition: .3s transform;
     }
     .title {

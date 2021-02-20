@@ -1,29 +1,29 @@
 import React from 'react';
-import { Route } from 'react-router-dom';
+import { Route, Switch, Redirect } from 'react-router-dom';
 import styles from './App.module.scss';
 import Header from './components/Header/Header';
 import MainPage from './components/MainPage/MainPage';
 import ListPage from './components/ListPage/ListPage';
 import Quiz from './components/Quiz/Quiz';
 
-type AddressType = {
-  country: null | string,
-  city: null | string,
-}
-const initialState = {
-  name: null as string | null,
-  age: null as number | null,
-  address: [] as Array<AddressType>
-}
-export type initialStateType = typeof initialState;
-const state: initialStateType = {
-  name: 'asda',
-  age: 22,
-  address: [{
-    country: 'asas',
-    city: 'asda'
-  }]
-}
+// type AddressType = {
+//   country: null | string,
+//   city: null | string,
+// }
+// const initialState = {
+//   name: null as string | null,
+//   age: null as number | null,
+//   address: [] as Array<AddressType>
+// }
+// export type initialStateType = typeof initialState;
+// const state: initialStateType = {
+//   name: 'asda',
+//   age: 22,
+//   address: [{
+//     country: 'asas',
+//     city: 'asda'
+//   }]
+// }
 
 function App() {
   return (
@@ -33,9 +33,12 @@ function App() {
           <Header />
         </div>
         <div className={styles.content}>
-          <Route path={'/main'} render={() => <MainPage />} />
-          <Route path={'/list/:listName'} render={() => <ListPage />} />
-          <Route path={'/quiz/:quizName'} render={() => <Quiz />} />
+          <Switch>
+            <Redirect exact from='/' to='/main' />
+            <Route path={'/main'} render={() => <MainPage />} />
+            <Route path={'/list/:listName'} render={() => <ListPage />} />
+            <Route path={'/quiz/:quizName'} render={() => <Quiz />} />
+          </Switch>
         </div>
       </div>
     </div>
