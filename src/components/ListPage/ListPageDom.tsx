@@ -1,5 +1,6 @@
 import React from 'react';
 import styles from './ListPage.module.scss';
+import { NavLink } from 'react-router-dom';
 
 type Question = {
   options: string[],
@@ -15,18 +16,21 @@ type Props = {
     type: string,
     src: string,
     questions: Array<Question>
-  }>
+  }>,
+  openQuiz: (name: string) => void
 }
 
 export const ListPageDom = (props: Props) => {
   return (
     <div className={styles.wrapper}>
       {props.list.map((el: any, i: number) => {
-        return (
-          <div className={styles.item} key={i}>
-            {el.en}
+        return <NavLink to={`/quiz/${el.name}`} onClick={() => props.openQuiz(el.name)}
+          className={styles.item} key={i}>
+          <img src={el.src} className={styles.image} ></img>
+          <div className={styles.title}>
+            {el.ru}
           </div>
-        )
+        </NavLink>
       })}
     </div>
   )

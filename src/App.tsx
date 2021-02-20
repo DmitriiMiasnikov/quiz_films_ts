@@ -23,7 +23,6 @@ const state: initialStateType = {
     city: 'asda'
   }]
 }
-// console.log(state);
 
 function App() {
   return (

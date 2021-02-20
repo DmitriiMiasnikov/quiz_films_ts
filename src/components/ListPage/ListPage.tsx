@@ -19,9 +19,11 @@ type Props = {
   }>
 }
 const ListPage = (props: Props) => {
-
+  const openQuiz = (name: string) => {
+    console.log(name);
+  }
   return (
-    <ListPageDom {...props}/>
+    <ListPageDom {...props} openQuiz={openQuiz}/>
   )
 }
 
