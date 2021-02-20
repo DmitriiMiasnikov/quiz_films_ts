@@ -1,6 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { ListPageDom } from './ListPageDom';
+import { setCurrentQuiz } from './../../store/quizReducer';
 
 type Question = {
   options: string[],
@@ -19,8 +20,10 @@ type Props = {
   }>
 }
 const ListPage = (props: Props) => {
+
   const openQuiz = (name: string) => {
     console.log(name);
+    setCurrentQuiz(name);
   }
   return (
     <ListPageDom {...props} openQuiz={openQuiz}/>
@@ -33,4 +36,4 @@ const mapStatesToProps = (state: any) => {
   }
 }
 
-export default connect(mapStatesToProps, {})(ListPage)
+export default connect(mapStatesToProps, { setCurrentQuiz })(ListPage)

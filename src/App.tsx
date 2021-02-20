@@ -4,6 +4,7 @@ import styles from './App.module.scss';
 import Header from './components/Header/Header';
 import MainPage from './components/MainPage/MainPage';
 import ListPage from './components/ListPage/ListPage';
+import Quiz from './components/Quiz/Quiz';
 
 type AddressType = {
   country: null | string,
@@ -34,6 +35,7 @@ function App() {
         <div className={styles.content}>
           <Route path={'/main'} render={() => <MainPage />} />
           <Route path={'/list/:listName'} render={() => <ListPage />} />
+          <Route path={'/quiz/:quizName'} render={() => <Quiz />} />
         </div>
       </div>
     </div>
