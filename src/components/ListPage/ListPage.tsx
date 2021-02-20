@@ -17,13 +17,13 @@ type Props = {
     type: string,
     src: string,
     questions: Array<Question>
-  }>
+  }>,
+  setCurrentQuiz: (name: string) => void
 }
 const ListPage = (props: Props) => {
 
-  const openQuiz = (name: string) => {
-    console.log(name);
-    setCurrentQuiz(name);
+  const openQuiz = (quiz: any) => {
+    props.setCurrentQuiz(quiz);
   }
   return (
     <ListPageDom {...props} openQuiz={openQuiz}/>

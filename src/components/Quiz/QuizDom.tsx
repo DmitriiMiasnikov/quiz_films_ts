@@ -16,7 +16,7 @@ export const QuizDom = (props: any) => {
               {
                 props.currentQuiz.questions[props.step].options.map((el: any, i: number) => {
                   return <div className={styles.question} key={i}
-                    onClick={() => props.checkAnswer(el, props.step, i)}>{el}</div>
+                    onClick={() => props.checkAnswerFunc(el, props.step, i)}>{el}</div>
                 })
               }
             </div>

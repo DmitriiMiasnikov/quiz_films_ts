@@ -1,0 +1,47 @@
+.wrapper {
+  position: relative;
+  box-sizing: border-box;
+  padding: 0 50px 60px 50px;
+  width: 100%;
+  .content {
+    .quiz {
+      position: relative;
+      width: 800px;
+      left: 50%;
+      transform: translateX(-50%);
+      &.inactive {
+        pointer-events: none;
+      }
+      img {
+        width: 100%;
+        position: relative;
+      }
+      .questions {
+        position: relative;
+        .question {
+          background-color: #c2c0cd;
+          transition: 0.2s background-color;
+          font-size: 32px;
+          box-sizing: border-box;
+          padding-left: 20px;
+          margin-bottom: 5px;
+          &:hover {
+            cursor: pointer;
+            background-color: #7585b6;
+          }
+          &.wrong {
+            background-color: #ff5252;
+          }
+          &.right {
+            background-color: #40be34;
+          }
+        }
+      }
+    }
+    transition: 0.5s opacity, 0.5s visibility;
+    &.hide {
+      opacity: 0;
+      visibility: hidden;
+    }
+  }
+}
