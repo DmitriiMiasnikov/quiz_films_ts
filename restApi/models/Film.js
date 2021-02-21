@@ -1,13 +1,9 @@
 const { Schema, model } = require('mongoose');
 
 const schema = new Schema({
-  filmId: {
-    type: Number,
-    required: true
-  },
   name: {
     type: String,
-    default: ''
+    required: true
   },
   title: {
     type: String,
@@ -23,4 +19,4 @@ const schema = new Schema({
   },
 })
 
-module.exports = model('Ranobe', schema);
+module.exports = model('Film', schema);

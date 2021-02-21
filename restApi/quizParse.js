@@ -19,6 +19,7 @@ const start = async () => {
   }
 }
 start();
+// all = 33
 const counter = 33;
 const arr = [];
 let count = 0;
@@ -28,6 +29,7 @@ function delay() {
 }
 
 async function delayedLog(item) {
+  await delay();
   const pageURL = `https://www.film.ru/movies/a-z/genre/0?page=${item}`;
   needle.get(pageURL, async function (err, res) {
     const doc = new dom({
@@ -38,11 +40,12 @@ async function delayedLog(item) {
         fatalError: function (e) { console.error(e) }
       }
     }).parseFromString(res.body);
-    console.log(item, doc.toString().length);
     const pathFilm = '//*[@class="rating infinite_scroll"]/a/@href';
     const tmpItems = xpath.select(pathFilm, doc);
     for (let i = 0; i < tmpItems.length; i++) {
-      const filmURL = `https://www.film.ru/${tmpItems[i]}`;
+      // console.log(count, tmpItems[i].value);
+      await delay();
+      const filmURL = `https://www.film.ru/${tmpItems[i].value}`;
       needle.get(filmURL, async function (err, res) {
         const doc = new dom({
           locator: {},
@@ -52,8 +55,10 @@ async function delayedLog(item) {
             fatalError: function (e) { console.error(e) }
           }
         }).parseFromString(res.body);
-        const pathFilm = ".//*[@class='submenu']//a[contains(text(), 'Кадры')]/@href";
-        const URL = `https://www.film.ru/${pathFilm[0]}`;
+        const pathFilm = ".//*[@class='submenu']//a[contains(text(), 'О фильме')]/@href";
+        const tmpPathFilm = xpath.select(pathFilm, doc);
+        // console.log(i, tmpPathFilm[0].value);
+        const URL = `https://www.film.ru/${tmpPathFilm[0].value}`;
         needle.get(URL, async function (err, res) {
           const doc = new dom({
             locator: {},
@@ -71,53 +76,45 @@ async function delayedLog(item) {
           const tmpTitle = xpath.select(pathTitle, doc);
           const tmpKeys = xpath.select(pathKeys, doc);
           const tmpSimilar = xpath.select(pathSimilar, doc);
-          console.log(tmpName[0].data.split('/').slice(-1).join(''), tmpTitle[0].data,
-            tmpKeys[0].data.split(', '), tmpSimilar.map(el => el.split('/').slice(-1).join(''))
-          );
-          
-          for (let i = 1; i <= 10; i++) {
-            const imageURL = `${URL}#frames-${i}`;
-            needle.get(imageURL, async function (err, res) {
-              const doc = new dom({
-                locator: {},
-                errorHandler: {
-                  warning: function (w) { },
-                  error: function (e) { },
-                  fatalError: function (e) { console.error(e) }
-                }
-              }).parseFromString(res.body);
-  
-              const pathImg = ".//*[@class='fancybox-stage']//div[contains(@class, 'fancybox-slide--current')]/img/@src";
-              const tmpImg = xpath.select(pathImg, doc);
-              console.log(tmpImg[0].value);
+          // console.log(tmpName[0].value.split('/').slice(-1).join(''));
+          // console.log(tmpTitle[0].data);
+          // console.log(tmpKeys[0].data.split(', '));
+          // console.log(tmpSimilar.map(el => el.value.split('/').slice(-1).join('')));
+
+          const pathImg = ".//*[@data-fancybox='frames']/@href";
+          const tmpImg = xpath.select(pathImg, doc);
+          console.log(count)
+          let countImg = 0;
+          for (let j = 0; j <= tmpImg.length && j < 5; j++) {
+            const imageURL = `https://www.film.ru/${tmpImg[j].value}`;
               // if (tmpImg[0].value) {
-              //   const curl = spawn('curl', ['-o', `./imgBooks/${count}.jpg`, tmpImgNew]);
+              //   const curl = spawn('curl', ['-o', `./imgFilms/${tmpName[0].value.split('/').slice(-1).join('')}_${countImg}.jpg`, imageURL]);
               //   curl.stdout.on('data', (data) => {
               //     console.log(`stdout: ${data}`);
               //   });
+              //   countImg = countImg + 1;
+              // } else {
+              //   console.log('no img');
               // }
-            })
           }
-          // if (!err && res.statusCode == 200 && tmpImg && tmpNameRu.length && doc.toString().length > 1000) {
+          await delay();
+          // if (!err && res.statusCode == 200 && tmpImg && tmpName.length && doc.toString().length > 1000) {
           //   const film = new Film({
-          //     filmId: count,
-          //     nameRu: tmpNameRu.length ? tmpNameRu[0].data : null,
-          //     nameEng: tmpNameEng.length ? tmpNameEng[0].data : null,
-          //     author: tmpAuthor.length ? tmpAuthor[0].data : null,
-          //     genre: tmpGenre.length ? tmpGenre[0].data.split(', ') : null,
-          //     language: tmpLanguage.length ? tmpLanguage[0].data : null,
-          //     description: tmpDescription.length ? tmpDescription.map(el => el.data).join('') : null,
+          //     name: tmpName.length ? tmpName[0].value.split('/').slice(-1).join('') : null,
+          //     title: tmpTitle.length ? tmpTitle[0].data : null,
+          //     keys: tmpKeys.length ? tmpKeys[0].data.split(', ') : null,
+          //     similarFilms: tmpSimilar.length ? tmpSimilar.map(el => el.value.split('/').slice(-1).join('')) : null
           //   })
           //   await film.save()
           // } else {
-          //   if (!tmpNameRu.length) console.log('tmpNameRu.length')
+          //   if (!tmpName.length) console.log('tmpName.length')
           //   if (!tmpImg) console.log('!tmpImg')
           // }
         })
       })
+      await delay();
       count = count + 1;
     }
-    await delay();
   });
 }
 processArray(arr);

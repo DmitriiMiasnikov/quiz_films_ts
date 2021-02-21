@@ -19,4 +19,4 @@ const schema = new Schema({
   },
 })
 
-module.exports = model('Ranobe', schema);
+module.exports = model('Quiz', schema);
