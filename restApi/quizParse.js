@@ -55,8 +55,12 @@ async function delayedLog(item) {
             fatalError: function (e) { console.error(e) }
           }
         }).parseFromString(res.body);
-        const pathFilm = ".//*[@class='submenu']//a[contains(text(), 'О фильме')]/@href";
-        const tmpPathFilm = xpath.select(pathFilm, doc);
+        let pathFilm = ".//*[@class='submenu']//a[contains(text(), 'О фильме')]/@href";
+        let tmpPathFilm = xpath.select(pathFilm, doc);
+        if (!tmpPathFilm.length) {
+          pathFilm = ".//*[@class='submenu']//a[contains(text(), 'Кадры')]/@href";
+          tmpPathFilm = xpath.select(pathFilm, doc);
+        }
         // console.log(i, tmpPathFilm[0].value);
         const URL = `https://www.film.ru/${tmpPathFilm[0].value}`;
         needle.get(URL, async function (err, res) {
@@ -81,24 +85,26 @@ async function delayedLog(item) {
           // console.log(tmpKeys[0].data.split(', '));
           // console.log(tmpSimilar.map(el => el.value.split('/').slice(-1).join('')));
 
-          const pathImg = ".//*[@data-fancybox='frames']/@href";
-          const tmpImg = xpath.select(pathImg, doc);
-          console.log(count)
-          let countImg = 0;
-          for (let j = 0; j <= tmpImg.length && j < 5; j++) {
-            const imageURL = `https://www.film.ru/${tmpImg[j].value}`;
-              // if (tmpImg[0].value) {
-              //   const curl = spawn('curl', ['-o', `./imgFilms/${tmpName[0].value.split('/').slice(-1).join('')}_${countImg}.jpg`, imageURL]);
-              //   curl.stdout.on('data', (data) => {
-              //     console.log(`stdout: ${data}`);
-              //   });
-              //   countImg = countImg + 1;
-              // } else {
-              //   console.log('no img');
-              // }
-          }
+          // const pathImg = ".//*[@data-fancybox='frames']/@href";
+          // const tmpImg = xpath.select(pathImg, doc);
+          // console.log(count)
+          // let countImg = 0;
+          // for (let j = 0; j <= tmpImg.length && j < 5; j++) {
+          //   const imageURL = `https://www.film.ru/${tmpImg[j].value}`;
+          //     if (tmpImg[0].value) {
+          //       const curl = spawn('curl', ['-o', `./imgFilms/${tmpName[0].value.split('/').slice(-1).join('')}_${countImg}.jpg`, imageURL]);
+          //       curl.stdout.on('data', (data) => {
+          //         console.log(`stdout: ${data}`);
+          //       });
+          //       countImg = countImg + 1;
+          //     } else {
+          //       console.log('no img');
+          //     }
+          // }
           await delay();
-          // if (!err && res.statusCode == 200 && tmpImg && tmpName.length && doc.toString().length > 1000) {
+          console.log(count);
+          // if (!err && res.statusCode == 200 && tmpTitle.length && tmpKeys.length &&
+          //   tmpName.length && doc.toString().length > 1000) {
           //   const film = new Film({
           //     name: tmpName.length ? tmpName[0].value.split('/').slice(-1).join('') : null,
           //     title: tmpTitle.length ? tmpTitle[0].data : null,
@@ -108,7 +114,8 @@ async function delayedLog(item) {
           //   await film.save()
           // } else {
           //   if (!tmpName.length) console.log('tmpName.length')
-          //   if (!tmpImg) console.log('!tmpImg')
+          //   if (!tmpTitle.length) console.log('!title')
+          //   if (!tmpKeys.length) console.log('!tmpKeys')
           // }
         })
       })

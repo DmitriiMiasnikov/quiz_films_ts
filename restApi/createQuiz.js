@@ -31,6 +31,7 @@ async function delayedLog(item) {
       .sort((a, b) => a[0] - b[0]).map((a) => a[1]);
 
     let arrFilmsByKey = await Film.find({ keys: 'анимация' });
+    console.log(arrFilmsByKey.length);
     let arrAllFilms = await Film.find({})
     arrFilmsByKey = shuffleFunc(arrFilmsByKey);
     let questions = [];
@@ -51,22 +52,26 @@ async function delayedLog(item) {
           options = shuffleFunc(arrFilmsByKey.filter(el => arrFilmsByKeySliced
             .every(item => item.name !== el.name)).map(el => el.name)).slice(0, 4);
         }
-        options = options.map((item, j) => {
-            console.log(options);
-            const selectedFilm = arrAllFilms.find(film => film.name === item);
-            console.log(selectedFilm, item);
-            return {
-              name: item,
-              title: selectedFilm.title
+        options = options.map(item => {
+          let selectedFilmTitle = null;
+          arrAllFilms.forEach(film => {
+            if (film.name === item) {
+              // console.log(film.name, film.title);
+              selectedFilmTitle = film.title;
             }
-          })
+          });
+          return {
+            name: item,
+            title: selectedFilmTitle
+          }
+        })
         const question = {
           options: options.concat({ name: el.name, title: el.title }),
           currect: { name: el.name, title: el.title }
         }
+        console.log(question);
         questions.push(question);
       })
-      console.log(questions);
       // const quiz = new Quiz({
       //   name: `animation_${item}`,
       //   title: `Анимационные фильмы - ${item}`,
