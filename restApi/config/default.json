@@ -1,5 +1,5 @@
 {
   "port": 5000,
-  "mongoUri": "mongodb+srv://dmitrii:332433@cluster0.1eemj.mongodb.net/api",
+  "mongoUri": "mongodb+srv://dmitrii:332433@cluster0.epggd.mongodb.net/index?retryWrites=true&w=majority",
   "jwtSecret": "dmitriim"
 }

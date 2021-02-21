@@ -1,33 +1,21 @@
 const { Schema, model } = require('mongoose');
 
 const schema = new Schema({
-  ranobeId: {
+  quizId: {
     type: Number,
     required: true
   },
-  nameRu: {
+  name: {
     type: String,
     default: ''
   },
-  nameEng: {
+  title: {
     type: String,
     default: ''
   },
-  author: {
-    type: Schema.Types.Mixed,
-    default: ''
-  },
-  genre: {
+  questions: {
     type: Schema.Types.Mixed,
     default: []
-  },
-  language: {
-    type: String,
-    default: ''
-  },
-  description: {
-    type: String,
-    default: ''
   },
 })
 

@@ -21,53 +21,6 @@ const schema = new Schema({
     type: Schema.Types.Mixed,
     default: ['user']
   },
-  animation: {
-    type: Schema.Types.Mixed,
-    default: {
-      done: [],
-      queue: []
-    }
-  },
-  ranobe: {
-    type: Schema.Types.Mixed,
-    default: {
-      done: [],
-      queue: []
-    }
-  },
-  manga: {
-    type: Schema.Types.Mixed,
-    default: {
-      done: [],
-      queue: []
-    }
-  },
-  animationRating: {
-    type: Schema.Types.Mixed,
-    default: {
-      0: 0
-    }
-  },
-  mangaRating: {
-    type: Schema.Types.Mixed,
-    default: {
-      0: 0
-    }
-  },
-  ranobeRating: {
-    type: Schema.Types.Mixed,
-    default: {
-      0: 0
-    }
-  },
-  lastViewed: {
-    type: Schema.Types.Mixed,
-    default: {
-      animation: [],
-      ranobe: [],
-      manga: []
-    }
-  }
 })
 
 module.exports = model('Users', schema);
