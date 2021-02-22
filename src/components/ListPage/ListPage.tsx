@@ -7,7 +7,8 @@ import { getList } from './../../store/listReducer';
 type Props = {
   list: Array<{
     name: string,
-    title: string
+    title: string,
+    randomName: string
   }>,
   setCurrentQuiz: (name: string) => void,
   getList: () => void

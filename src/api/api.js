@@ -7,7 +7,7 @@ const instance = axios.create({
 export const listApi = {
   async getList() {
     const res = await instance.get('quiz/list');
-    return res.data.quizList;
+    return res.data.list;
   }
 }
 

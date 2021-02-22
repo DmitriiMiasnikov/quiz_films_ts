@@ -5,7 +5,8 @@ const GET_LIST = 'GET_LIST';
 type InitialStates = {
   list: Array<{
     name: string,
-    title: string
+    title: string,
+    randomName: string
   }> | null
 }
 
@@ -23,7 +24,7 @@ export const listReducer = (state = initialStates, action: any) => {
   return state
 }
 
-const getListFunc = (list: Array<{ name: string, title: string }>) => {
+const getListFunc = (list: Array<{ name: string, title: string, randomName: string }>) => {
   return { type: GET_LIST, list }
 }
 
