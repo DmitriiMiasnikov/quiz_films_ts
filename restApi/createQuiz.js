@@ -32,11 +32,10 @@ async function delayedLog(item) {
 
     let arrFilmsByKey = await Film.find({ keys: 'анимация' });
     console.log(arrFilmsByKey.length);
-    let arrAllFilms = await Film.find({})
     arrFilmsByKey = shuffleFunc(arrFilmsByKey);
-    let questions = [];
 
     for (let j = 0; j < 18; j++) {
+      let questions = [];
       const arrFilmsByKeySliced = arrFilmsByKey.slice(j * 10, j * 10 + 10)
       arrFilmsByKeySliced.forEach((el, i) => {
         let options;
@@ -46,38 +45,28 @@ async function delayedLog(item) {
           const length = el.similarFilms.length;
           options = shuffleFunc(el.similarFilms).concat(
             shuffleFunc(arrFilmsByKey.filter(el => arrFilmsByKeySliced
-              .every(item => item.name !== el.name)).map(el => el.name)).slice(0, 4 - length)
+              .every(item => item.name !== el.name)).map(el => ({ name: el.name, title: el.title })))
+              .slice(0, 4 - length)
           )
         } else if (!el.similarFilms) {
           options = shuffleFunc(arrFilmsByKey.filter(el => arrFilmsByKeySliced
-            .every(item => item.name !== el.name)).map(el => el.name)).slice(0, 4);
+            .every(item => item.name !== el.name)).map(el => ({ name: el.name, title: el.title })))
+            .slice(0, 4);
         }
-        options = options.map(item => {
-          let selectedFilmTitle = null;
-          arrAllFilms.forEach(film => {
-            if (film.name === item) {
-              // console.log(film.name, film.title);
-              selectedFilmTitle = film.title;
-            }
-          });
-          return {
-            name: item,
-            title: selectedFilmTitle
-          }
-        })
         const question = {
           options: options.concat({ name: el.name, title: el.title }),
           currect: { name: el.name, title: el.title }
         }
-        console.log(question);
+        // console.log(question);
         questions.push(question);
       })
-      // const quiz = new Quiz({
-      //   name: `animation_${item}`,
-      //   title: `Анимационные фильмы - ${item}`,
-      //   questions: questions
-      // })
-      // await quiz.save()
+      console.log(j);
+      const quiz = new Quiz({
+        name: `animation_${j}`,
+        title: `Анимационные фильмы - ${j}`,
+        questions: questions
+      })
+      await quiz.save()
     }
   } catch (e) {
     console.log(e)
