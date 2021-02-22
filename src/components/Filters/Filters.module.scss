@@ -1,0 +1,17 @@
+.wrapper {
+  position: relative;
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: row;
+  .item {
+    padding: 5px 15px;
+    border-radius: 12px;
+    margin-left: 20px;
+    background-color: rgb(53, 53, 53);
+    transition: .2s background-color;
+    &:hover {
+      cursor: pointer;
+      background-color: rgb(41, 41, 41);
+    }
+  }
+}

@@ -2,6 +2,7 @@ import { listApi } from './../api/api';
 
 const GET_LIST = 'GET_LIST';
 const SET_PAGE = 'SET_PAGE';
+const CLEAR_LIST = 'CLEAR_LIST';
 
 type InitialStates = {
   list: {
@@ -26,6 +27,9 @@ export const listReducer = (state = initialStates, action: any) => {
     case (SET_PAGE): {
       return { ...state, page: action.page }
     }
+    case (CLEAR_LIST): {
+      return {...state, list: [], page: 1 }
+    }
     default: break;
   }
   return state
@@ -36,6 +40,9 @@ const getListFunc = (list: Array<{ name: string, title: string, randomName: stri
 }
 export const setPage = (page: number) => {
   return { type: SET_PAGE, page }
+}
+export const clearList = () => {
+  return { type: CLEAR_LIST }
 }
 
 export const getList = (page = 1) => {
