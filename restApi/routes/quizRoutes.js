@@ -5,7 +5,7 @@ const router = Router();
 
 
 // получение списка
-// /list/
+// quiz/list/
 router.get(
   '/list',
   async (req, res) => {
@@ -24,5 +24,21 @@ router.get(
     }
   }
 )
+
+// получение списка
+// quiz/:quizName
+router.get(
+  '/:quizName',
+  async (req, res) => {
+    try {
+      const quizName = req.params.quizName;
+      const quiz = await Quiz.findOne({ name: quizName }, 'name title questions');
+      res.status(200).json({ quiz });
+    } catch (e) {
+      console.log(e)
+    }
+  }
+)
+
 
 module.exports = router;

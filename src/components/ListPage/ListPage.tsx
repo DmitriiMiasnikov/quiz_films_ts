@@ -1,7 +1,6 @@
 import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
 import { ListPageDom } from './ListPageDom';
-import { setCurrentQuiz } from './../../store/quizReducer';
 import { getList } from './../../store/listReducer';
 
 type Props = {
@@ -10,18 +9,15 @@ type Props = {
     title: string,
     randomName: string
   }>,
-  setCurrentQuiz: (name: string) => void,
   getList: () => void
 }
 const ListPage = (props: Props) => {
   useEffect(() => {
     props.getList()
   }, [])
-  const openQuiz = (quiz: any) => {
-    props.setCurrentQuiz(quiz);
-  }
+
   return (
-    <ListPageDom {...props} openQuiz={openQuiz} />
+    <ListPageDom {...props} />
   )
 }
 
@@ -31,4 +27,4 @@ const mapStatesToProps = (state: any) => {
   }
 }
 
-export default connect(mapStatesToProps, { setCurrentQuiz, getList })(ListPage)
+export default connect(mapStatesToProps, { getList })(ListPage)

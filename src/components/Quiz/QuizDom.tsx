@@ -15,12 +15,13 @@ export const QuizDom = (props: any) => {
           props.currentQuiz && props.step < props.currentQuiz.questions.length && <div className={classnames(styles.quiz, {
             [styles.inactive]: props.inactiveButtons
           })}>
-            <img src={props.currentQuiz.questions[props.step].src} className={styles.image}></img>
+            <img src={`https://dmitrii.amyasnikov.pro/films/${props.currentQuiz.questions[props.step].currect.name}_${Math.floor(Math.random() * 5)}.jpg`} 
+              className={styles.image}></img>
             <div className={styles.questions}>
               {
                 props.currentQuiz.questions[props.step].options.map((el: any, i: number) => {
                   return <div className={styles.question} key={i}
-                    onClick={() => props.checkAnswerFunc(el, props.step, i)}>{el}</div>
+                    onClick={() => props.checkAnswerFunc(el.name, props.step, i)}>{el.title}</div>
                 })
               }
             </div>

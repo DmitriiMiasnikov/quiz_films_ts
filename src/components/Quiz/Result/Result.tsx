@@ -17,13 +17,13 @@ export const Result = (props: Props) => {
             <img src={props.currentQuiz.questions[i].src} className={styles.image}></img>
             <div className={styles.questions}>
               {
-                props.currentQuiz.questions[i].options.map((el: string, item: number) => {
+                props.currentQuiz.questions[i].options.map((el: {title: string, name: string}, item: number) => {
                   return <div className={styles.question} key={item}>
                     <div className={classnames(styles.tickCross, {
                       [styles.wrong]: props.answers[i][1] === item && props.answers[i][0] === false,
-                      [styles.right]: props.currentQuiz.questions[i].currect === el
+                      [styles.right]: props.currentQuiz.questions[i].currect.name === el.name
                     })}></div>
-                    <div className={styles.text}>{el}</div>
+                    <div className={styles.text}>{el.title}</div>
                   </div>
                 })
               }

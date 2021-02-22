@@ -1,3 +1,4 @@
+import { quizApi } from "../api/api";
 
 const SET_CURRENT_QUIZ = 'SET_CURRENT_QUIZ';
 const CLEAR = 'CLEAR';
@@ -7,7 +8,11 @@ const RESULT_TEXT = 'RESULT_TEXT';
 const TOGGLE_INACTIVE_BUTTONS = 'TOGGLE_INACTIVE_BUTTONS';
 
 type InitialStates = {
-  currentQuiz: any,
+  currentQuiz: {
+    name: string,
+    title: string,
+    randomName: string
+  }[] | null,
   step: number,
   answers: Array<string>,
   resultText: string | null,
@@ -42,7 +47,7 @@ export const quizReducer = (state = initialStates, action: any) => {
             return null
           } else if (i < action.step) {
             return state.answers[i]
-          } else if (action.answer === state.currentQuiz.questions[action.step].currect) {
+          } else if (action.answer === action.currentQuiz.questions[action.step].currect.name) {
             return [true, action.item]
           } else return [false, action.item]
         })
@@ -63,7 +68,7 @@ export const quizReducer = (state = initialStates, action: any) => {
   }
   return state
 }
-export const setCurrentQuiz = (quiz: any) => {
+const setCurrentQuizFunc = (quiz: any) => {
   return { type: SET_CURRENT_QUIZ, quiz }
 }
 export const clear = () => {
@@ -72,12 +77,19 @@ export const clear = () => {
 export const stepUp = () => {
   return { type: STEP_UP }
 }
-export const checkAnswer = (answer: any, step: number, answersArr: Array<string>, item: number) => {
-  return { type: CHECK_ANSWER, answer, step, answersArr, item }
+export const checkAnswer = (answer: any, step: number, answersArr: Array<string>, item: number, currentQuiz: any) => {
+  return { type: CHECK_ANSWER , answer, step, answersArr, item, currentQuiz }
 }
 export const getResultText = (right: number, all: number) => {
   return { type: RESULT_TEXT, right, all }
 }
 export const toggleInactiveButtons = (toggle: boolean) => {
   return { type: TOGGLE_INACTIVE_BUTTONS, toggle }
+}
+
+export const getQuiz = (name: string) => {
+  return async (dispatch: any) => {
+    const res = await quizApi.getQuiz(name)
+    dispatch(setCurrentQuizFunc(res.data.quiz))
+  }
 }
