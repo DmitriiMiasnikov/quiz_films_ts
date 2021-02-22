@@ -14,10 +14,10 @@ export const Result = (props: Props) => {
       {
         props.currentQuiz && props.currentQuiz.questions.map((el: unknown, i: number) => {
           return <div className={styles.item} key={i}>
-            <img src={props.currentQuiz.questions[i].src} className={styles.image}></img>
+            <img src={`https://dmitrii.amyasnikov.pro/films/${props.answers[i][2]}.jpg`} className={styles.image}></img>
             <div className={styles.questions}>
               {
-                props.currentQuiz.questions[i].options.map((el: {title: string, name: string}, item: number) => {
+                props.currentQuiz.questions[i].options.map((el: { title: string, name: string }, item: number) => {
                   return <div className={styles.question} key={item}>
                     <div className={classnames(styles.tickCross, {
                       [styles.wrong]: props.answers[i][1] === item && props.answers[i][0] === false,

@@ -48,8 +48,8 @@ export const quizReducer = (state = initialStates, action: any) => {
           } else if (i < action.step) {
             return state.answers[i]
           } else if (action.answer === action.currentQuiz.questions[action.step].currect.name) {
-            return [true, action.item]
-          } else return [false, action.item]
+            return [true, action.item, action.currentImage]
+          } else return [false, action.item, action.currentImage]
         })
       }
     }
@@ -77,8 +77,9 @@ export const clear = () => {
 export const stepUp = () => {
   return { type: STEP_UP }
 }
-export const checkAnswer = (answer: any, step: number, answersArr: Array<string>, item: number, currentQuiz: any) => {
-  return { type: CHECK_ANSWER , answer, step, answersArr, item, currentQuiz }
+export const checkAnswer = (answer: any, step: number, answersArr: Array<string>, item: number, 
+    currentQuiz: any, currentImage: string) => {
+  return { type: CHECK_ANSWER , answer, step, answersArr, item, currentQuiz, currentImage }
 }
 export const getResultText = (right: number, all: number) => {
   return { type: RESULT_TEXT, right, all }

@@ -5,6 +5,9 @@ import { ProgressBar } from './ProgressBar/ProgressBar';
 import { Result } from './Result/Result';
 
 export const QuizDom = (props: any) => {
+  const currentImage = props.currentQuiz && props.step < props.currentQuiz.questions.length && 
+    `${props.currentQuiz.questions[props.step].currect.name}_${Math.floor(Math.random() * 5)}`;
+  const imageLink = () => `https://dmitrii.amyasnikov.pro/films/${currentImage}.jpg`;
   return (
     <div className={styles.wrapper}>
       {
@@ -15,13 +18,13 @@ export const QuizDom = (props: any) => {
           props.currentQuiz && props.step < props.currentQuiz.questions.length && <div className={classnames(styles.quiz, {
             [styles.inactive]: props.inactiveButtons
           })}>
-            <img src={`https://dmitrii.amyasnikov.pro/films/${props.currentQuiz.questions[props.step].currect.name}_${Math.floor(Math.random() * 5)}.jpg`} 
+            <img src={imageLink()}
               className={styles.image}></img>
             <div className={styles.questions}>
               {
                 props.currentQuiz.questions[props.step].options.map((el: any, i: number) => {
                   return <div className={styles.question} key={i}
-                    onClick={() => props.checkAnswerFunc(el.name, props.step, i)}>{el.title}</div>
+                    onClick={() => props.checkAnswerFunc(el.name, props.step, i, currentImage)}>{el.title}</div>
                 })
               }
             </div>

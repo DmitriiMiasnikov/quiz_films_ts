@@ -37,9 +37,9 @@ const Quiz = (props: any) => {
     return () => props.clear()
   }, [])
 
-  const checkAnswerFunc = async (answer: any, step: number, item: number) => {
+  const checkAnswerFunc = async (answer: any, step: number, item: number, currentImage: string) => {
     if (answers) {
-      props.checkAnswer(answer, step, answers, item, props.currentQuiz)
+      props.checkAnswer(answer, step, answers, item, props.currentQuiz, currentImage)
       props.toggleInactiveButtons(true)
       await new Promise(res => setTimeout(res, 300))
       setHidePrevImage(true)
