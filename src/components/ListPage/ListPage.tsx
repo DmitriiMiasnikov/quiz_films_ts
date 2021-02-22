@@ -1,7 +1,8 @@
 import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
 import { ListPageDom } from './ListPageDom';
-import { getList } from './../../store/listReducer';
+import { getList, setPage } from './../../store/listReducer';
+import { withRouter } from 'react-router-dom';
 
 type Props = {
   list: Array<{
@@ -9,22 +10,29 @@ type Props = {
     title: string,
     randomName: string
   }>,
-  getList: () => void
+  page: number,
+  getList: (page: number) => void,
+  setPage: (page: number) => void
 }
 const ListPage = (props: Props) => {
-  useEffect(() => {
-    props.getList()
-  }, [])
 
+  useEffect(() => {
+    props.getList(props.page)
+  }, [props.page])
+
+  const addItemsHandler = () => {
+    props.setPage(props.page + 1)
+  }
   return (
-    <ListPageDom {...props} />
+    <ListPageDom {...props} addItemsHandler={addItemsHandler}/>
   )
 }
 
 const mapStatesToProps = (state: any) => {
   return {
-    list: state.list.list
+    list: state.list.list,
+    page: state.list.page
   }
 }
 
-export default connect(mapStatesToProps, { getList })(ListPage)
+export default withRouter(connect(mapStatesToProps, { getList, setPage })(ListPage))

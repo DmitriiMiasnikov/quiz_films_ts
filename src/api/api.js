@@ -5,8 +5,8 @@ const instance = axios.create({
 })
 
 export const listApi = {
-  async getList() {
-    const res = await instance.get('quiz/list');
+  async getList(page) {
+    const res = await instance.get(`quiz/list/${page}`);
     return res.data.list;
   }
 }

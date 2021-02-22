@@ -7,10 +7,12 @@ const router = Router();
 // получение списка
 // quiz/list/
 router.get(
-  '/list',
+  '/list/:page',
   async (req, res) => {
     try {
-      const quizList = await Quiz.find({}, 'name title questions');
+      const page = Number(req.params.page);
+      const counter = 20;
+      const quizList = await Quiz.find({}, 'name title questions').skip(counter * page - counter).limit(counter);
       const list = quizList.map(el => {
         return {
           name: el.name,
