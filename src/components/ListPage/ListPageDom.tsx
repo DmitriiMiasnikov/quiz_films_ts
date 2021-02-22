@@ -2,20 +2,10 @@ import React from 'react';
 import styles from './ListPage.module.scss';
 import { NavLink } from 'react-router-dom';
 
-type Question = {
-  options: string[],
-  currect: string,
-  src: string
-}
-
 type Props = {
   list: Array<{
     name: string,
-    en: string,
-    ru: string,
-    type: string,
-    src: string,
-    questions: Array<Question>
+    title: string
   }>,
   openQuiz: (quiz: Record<string, unknown>) => void
 }
@@ -23,12 +13,12 @@ type Props = {
 export const ListPageDom = (props: Props) => {
   return (
     <div className={styles.wrapper}>
-      {props.list.map((el: any, i: number) => {
+      {props.list && props.list.map((el: any, i: number) => {
         return <NavLink to={`/quiz/${el.name}`} onClick={() => props.openQuiz(el)}
           className={styles.item} key={i}>
-          <img src={el.src} className={styles.image} ></img>
+          {/* <img src={el.src} className={styles.image} ></img> */}
           <div className={styles.title}>
-            {el.ru}
+            {el.title}
           </div>
         </NavLink>
       })}
