@@ -5,7 +5,7 @@ type InitialStates = {
     name: string,
     title: string
   }[],
-  currentFilter: string | null
+  currentFilter: string
 }
 
 const initialStates: InitialStates = {
@@ -14,7 +14,7 @@ const initialStates: InitialStates = {
     {name: 'action', title: 'Боевики'},
     {name: 'scienceFiction', title: 'Фантастика'},
   ],
-  currentFilter: null
+  currentFilter: 'no'
 }
 
 export const filtersReducer = (state = initialStates, action: any) => {

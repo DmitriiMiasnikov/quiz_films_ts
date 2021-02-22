@@ -45,9 +45,9 @@ export const clearList = () => {
   return { type: CLEAR_LIST }
 }
 
-export const getList = (page = 1) => {
+export const getList = (page = 1, currentFilter: string) => {
   return async (dispatch: any) => {
-    const res = await listApi.getList(page);
+    const res = await listApi.getList(page, currentFilter);
     dispatch(getListFunc(res));
   }
 }

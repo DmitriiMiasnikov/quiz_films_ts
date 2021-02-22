@@ -11,15 +11,16 @@ type Props = {
     randomName: string
   }>,
   page: number,
-  getList: (page: number) => void,
+  currentFilter: string,
+  getList: (page: number, currentFilter: string) => void,
   setPage: (page: number) => void,
   clearList: () => void,
 }
 const ListPage = (props: Props) => {
 
   useEffect(() => {
-    props.getList(props.page)
-  }, [props.page])
+    props.getList(props.page, props.currentFilter)
+  }, [props.page, props.currentFilter])
   useEffect(() => {
     return () => props.clearList()
   }, [])
@@ -34,7 +35,8 @@ const ListPage = (props: Props) => {
 const mapStatesToProps = (state: any) => {
   return {
     list: state.list.list,
-    page: state.list.page
+    page: state.list.page,
+    currentFilter: state.filters.currentFilter
   }
 }
 
