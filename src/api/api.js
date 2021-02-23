@@ -5,8 +5,8 @@ const instance = axios.create({
 })
 
 export const listApi = {
-  async getList(page, currentFilter) {
-    const res = await instance.get(`quiz/list/${page}?filter=${currentFilter}`);
+  async getList(page, catalog, currentFilter) {
+    const res = await instance.get(`quiz/list/${page}?catalog=${catalog}&filter=${currentFilter}`);
     return res.data.list;
   }
 }

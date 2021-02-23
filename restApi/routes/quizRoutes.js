@@ -11,16 +11,19 @@ router.get(
   async (req, res) => {
     try {
       const page = Number(req.params.page);
-      const filter = req.query.filter;;
+      const catalog = req.query.catalog;
+      const filter = req.query.filter;
       const counter = 20;
       let quizList;
-      if (filter === 'no') {
-        quizList = await Quiz.find({}, 'name title questions')
-          .skip(counter * page - counter).limit(counter);
-      } else {
-        quizList = await Quiz.find({ name: { $regex: filter, $options: 'i' } }, 'name title questions')
-          .sort({ name: 1 })
-          .skip(counter * page - counter).limit(counter);
+      if (catalog === 'films') {
+        if (filter === 'no') {
+          quizList = await Quiz.find({}, 'name title questions')
+            .skip(counter * page - counter).limit(counter);
+        } else {
+          quizList = await Quiz.find({ name: { $regex: filter, $options: 'i' } }, 'name title questions')
+            .sort({ name: 1 })
+            .skip(counter * page - counter).limit(counter);
+        }
       }
       const list = quizList.map(el => {
         return {

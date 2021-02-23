@@ -30,11 +30,3 @@ export const filtersReducer = (state = initialStates, action: any) => {
 export const setCurrentFilter = (currentFilter: string) => {
   return { type: SET_CURRENT_FILTER, currentFilter }
 }
-
-
-// export const getList = (page = 1) => {
-//   return async (dispatch: any) => {
-//     const res = await listApi.getList(page);
-//     dispatch(getListFunc(res));
-//   }
-// }

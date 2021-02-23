@@ -11,9 +11,10 @@ type Props = {
     randomName: string
   }>,
   page: number,
+  catalog: string,
   currentFilter: string,
   isMobile: boolean,
-  getList: (page: number, currentFilter: string) => void,
+  getList: (page: number, catalog: string,currentFilter: string) => void,
   setPage: (page: number) => void,
   clearList: () => void,
 }
@@ -22,11 +23,11 @@ const ListPage = (props: Props) => {
   useEffect(() => {
     const fetchData = async () => {
       setFetching(true);
-      props.getList(props.page, props.currentFilter)
+      props.getList(props.page, props.catalog, props.currentFilter)
       setFetching(false);
     }
     fetchData()
-  }, [props.page, props.currentFilter])
+  }, [props.page, props.catalog, props.currentFilter])
   useEffect(() => {
     return () => props.clearList()
   }, [])
@@ -43,7 +44,8 @@ const mapStatesToProps = (state: any) => {
     list: state.list.list,
     page: state.list.page,
     currentFilter: state.filters.currentFilter,
-    isMobile: state.mainSettings.isMobile
+    isMobile: state.mainSettings.isMobile,
+    catalog: state.list.catalog
   }
 }
 
