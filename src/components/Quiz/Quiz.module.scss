@@ -4,14 +4,28 @@
   width: 100%;
   .content {
     overflow: hidden;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    .barFinished {
+      width: 230px;
+    }
+    .resultWrap {
+      width: 100%;
+      transition: 0.5s opacity, 0.5s visibility;
+    }
     .quiz {
       position: relative;
-      margin: 0 auto;
+      width: calc(100% - 460px);
       display: flex;
       align-items: center;
       flex-direction: column;
+      transition: 0.5s opacity, 0.5s visibility;
       &.inactive {
         pointer-events: none;
+      }
+      &.isMobile {
+        width: 100%;
       }
       .imageWrap {
         position: relative;
@@ -60,10 +74,15 @@
         }
       }
     }
-    transition: 0.5s opacity, 0.5s visibility;
     &.hide {
-      opacity: 0;
-      visibility: hidden;
+      .quiz {
+        opacity: 0;
+        visibility: hidden;
+      }
+      .resultWrap {
+        opacity: 0;
+        visibility: hidden;
+      }
     }
   }
 }
