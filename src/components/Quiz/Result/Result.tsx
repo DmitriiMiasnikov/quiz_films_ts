@@ -3,25 +3,24 @@ import styles from './Result.module.scss';
 import classnames from 'classnames';
 
 type Props = {
-  currentQuiz: any,
-  answers: any,
-  resultText: any
+  quiz: any,
+  answers: any
 }
 
 export const Result = (props: Props) => {
   return (
     <div className={styles.wrapper}>
       {
-        props.currentQuiz && props.currentQuiz.questions.map((el: unknown, i: number) => {
+        props.quiz && props.quiz.questions.map((el: unknown, i: number) => {
           return <div className={styles.item} key={i}>
-            <img src={`https://dmitrii.amyasnikov.pro/films/${props.answers[i][2]}.jpg`} className={styles.image}></img>
+            <img src={props.answers[i][2]} className={styles.image}></img>
             <div className={styles.questions}>
               {
-                props.currentQuiz.questions[i].options.map((el: { title: string, name: string }, item: number) => {
+                props.quiz.questions[i].options.map((el: { title: string, name: string }, item: number) => {
                   return <div className={styles.question} key={item}>
                     <div className={classnames(styles.tickCross, {
                       [styles.wrong]: props.answers[i][1] === item && props.answers[i][0] === false,
-                      [styles.right]: props.currentQuiz.questions[i].currect.name === el.name
+                      [styles.right]: props.quiz.questions[i].currect.name === el.name
                     })}></div>
                     <div className={styles.text}>{el.title}</div>
                   </div>
@@ -32,7 +31,7 @@ export const Result = (props: Props) => {
         })
       }
       <div className={styles.resultText}>
-        {props.resultText['ru']}
+        {`Верно завершено ${props.answers.map((el: any) => el[0]).filter((el: boolean) => el).length} из ${props.answers.length}.`}
       </div>
     </div>
   )
