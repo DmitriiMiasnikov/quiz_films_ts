@@ -68,6 +68,7 @@ const mapStatesToProps = (state: any) => {
     currentQuiz: state.quiz.currentQuiz,
     step: state.quiz.step,
     answers: state.quiz.answers,
+    isMobile: state.mainSettings.isMobile
   }
 }
 

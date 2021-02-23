@@ -6,7 +6,6 @@
     overflow: hidden;
     .quiz {
       position: relative;
-      width: 800px;
       margin: 0 auto;
       display: flex;
       align-items: center;
@@ -41,6 +40,9 @@
           font-size: 32px;
           box-sizing: border-box;
           padding-left: 20px;
+          display: flex;
+          justify-content: flex-start;
+          align-items: center;
           height: 20%;
           &:not(:first-child) {
             border-top: 4px solid #222222;

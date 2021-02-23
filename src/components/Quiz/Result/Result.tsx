@@ -13,7 +13,9 @@ export const Result = (props: Props) => {
       {
         props.quiz && props.quiz.questions.map((el: unknown, i: number) => {
           return <div className={styles.item} key={i}>
-            <img src={props.answers[i][2]} className={styles.image}></img>
+            <div className={styles.imageWrap}>
+              <img src={props.answers[i][2]} className={styles.image}></img>
+            </div>
             <div className={styles.questions}>
               {
                 props.quiz.questions[i].options.map((el: { title: string, name: string }, item: number) => {
