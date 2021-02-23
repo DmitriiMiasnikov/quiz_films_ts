@@ -12,11 +12,12 @@ export const QuizDom = (props: any) => {
       }
       <div className={classnames(styles.content, { [styles.hide]: props.hidePrevImage })}>
         {
-          props.quiz && props.step < props.quiz.questions.length && <div className={classnames(styles.quiz, {
-            [styles.inactive]: props.inactiveButtons
-          })}>
-            <img src={props.quiz.questions[props.step].image}
-              className={styles.image}></img>
+          props.quiz && props.step < props.quiz.questions.length && <div style={{ height: window.innerHeight - 115 }}
+            className={classnames(styles.quiz, { [styles.inactive]: props.inactiveButtons })}>
+            <div className={styles.imageWrap}>
+              <img src={props.quiz.questions[props.step].image}
+                className={styles.image}></img>
+            </div>
             <div className={styles.questions}>
               {
                 props.quiz.questions[props.step].options.map((el: any, i: number) => {
