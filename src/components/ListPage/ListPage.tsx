@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { connect } from 'react-redux';
 import { ListPageDom } from './ListPageDom';
 import { clearList, getList, setPage } from './../../store/listReducer';
@@ -17,9 +17,14 @@ type Props = {
   clearList: () => void,
 }
 const ListPage = (props: Props) => {
-
+  const [fetching, setFetching] = useState(true);
   useEffect(() => {
-    props.getList(props.page, props.currentFilter)
+    const fetchData = async () => {
+      setFetching(true);
+      props.getList(props.page, props.currentFilter)
+      setFetching(false);
+    }
+    fetchData()
   }, [props.page, props.currentFilter])
   useEffect(() => {
     return () => props.clearList()
@@ -28,7 +33,7 @@ const ListPage = (props: Props) => {
     props.setPage(props.page + 1)
   }
   return (
-    <ListPageDom {...props} addItemsHandler={addItemsHandler} />
+    <ListPageDom {...props} addItemsHandler={addItemsHandler} fetching={fetching}/>
   )
 }
 
