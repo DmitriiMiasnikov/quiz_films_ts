@@ -29,7 +29,10 @@ export const QuizDom = (props: any) => {
             <div className={styles.questions}>
               {
                 props.quiz.questions[props.step].options.map((el: any, i: number) => {
-                  return <div className={styles.question} key={i}
+                  return <div className={classnames(styles.question, {
+                    [styles.right]: props.answers[props.step] && i === props.answers[props.step][1] && props.answers[props.step][0],
+                    [styles.wrong]: props.answers[props.step] && i === props.answers[props.step][1] && !props.answers[props.step][0]
+                  })} key={i}
                     onClick={() => props.checkAnswerFunc(el.name, props.step, i, props.quiz.questions[props.step].image)}>
                     {el.title}</div>
                 })
@@ -44,7 +47,7 @@ export const QuizDom = (props: any) => {
         {
           props.quiz && props.step === props.quiz.questions.length && (
             <div className={styles.resultWrap}>
-            <Result answers={props.answers} quiz={props.quiz} />
+              <Result answers={props.answers} quiz={props.quiz} />
             </div>
           )
         }

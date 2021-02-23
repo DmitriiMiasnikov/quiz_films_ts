@@ -47,7 +47,7 @@ const Quiz = (props: any) => {
     if (quiz) {
       props.checkAnswer(answer, step, item, quiz, currentImage)
       setInactiveButtons(true)
-      await new Promise(res => setTimeout(res, 300))
+      await new Promise(res => setTimeout(res, 500))
       setHidePrevImage(true)
       await new Promise(res => setTimeout(res, 350))
       props.stepUp()

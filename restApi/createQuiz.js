@@ -43,7 +43,7 @@ async function delayedLog(item) {
     const shuffleFunc = (arr) => arr.map((a) => [Math.random(), a])
       .sort((a, b) => a[0] - b[0]).map((a) => a[1]);
 
-    let arrFilmsByKey = await Film.find({ keys: 'ужасы' });
+    let arrFilmsByKey = await Film.find({ keys: 'мелодрама' });
     console.log(arrFilmsByKey.length);
     arrFilmsByKey = shuffleFunc(arrFilmsByKey);
 
@@ -73,13 +73,13 @@ async function delayedLog(item) {
         // console.log(question);
         questions.push(question);
       })
-      // console.log(j, questions);
-      // const quiz = new Quiz({
-      //   name: `Horror_${j}`,
-      //   title: `Ужасы - ${j}`,
-      //   questions: questions
-      // })
-      // await quiz.save()
+      console.log(j, questions);
+      const quiz = new Quiz({
+        name: `melodrama_${j}`,
+        title: `Мелодрамы - ${j}`,
+        questions: questions
+      })
+      await quiz.save()
     }
   } catch (e) {
     console.log(e)

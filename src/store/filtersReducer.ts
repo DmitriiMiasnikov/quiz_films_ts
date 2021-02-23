@@ -12,7 +12,15 @@ const initialStates: InitialStates = {
   filters: [
     {name: 'animation', title: 'Анимация'},
     {name: 'action', title: 'Боевики'},
-    {name: 'scienceFiction', title: 'Фантастика'},
+    {name: 'musical', title: 'Мюзиклы'},
+    {name: 'western', title: 'Вестерны'},
+    {name: 'war', title: 'Военные'},
+    {name: 'historical', title: 'Исторические'},
+    {name: 'fantasy', title: 'Фентези'},
+    {name: 'comedy', title: 'Комедии'},
+    {name: 'drama', title: 'Драмы'},
+    {name: 'melodrama', title: 'Мелодрамы'},
+    {name: 'horror', title: 'Ужасы'},
   ],
   currentFilter: 'no'
 }
