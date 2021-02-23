@@ -12,6 +12,7 @@ type Props = {
   }>,
   page: number,
   currentFilter: string,
+  isMobile: boolean,
   getList: (page: number, currentFilter: string) => void,
   setPage: (page: number) => void,
   clearList: () => void,
@@ -41,7 +42,8 @@ const mapStatesToProps = (state: any) => {
   return {
     list: state.list.list,
     page: state.list.page,
-    currentFilter: state.filters.currentFilter
+    currentFilter: state.filters.currentFilter,
+    isMobile: state.mainSettings.isMobile
   }
 }
 

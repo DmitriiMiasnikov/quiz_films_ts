@@ -17,6 +17,9 @@
           transform: scale(1.05) translateZ(0);
         }
       }
+      &.isMobile {
+        width: 48%;
+      }
       .itemInner {
         height: 0px;
         padding-top: 65%;

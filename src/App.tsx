@@ -1,11 +1,12 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Route, Switch, Redirect } from 'react-router-dom';
+import { connect } from 'react-redux';
 import styles from './App.module.scss';
 import Header from './components/Header/Header';
 import MainPage from './components/MainPage/MainPage';
 import ListPage from './components/ListPage/ListPage';
 import Quiz from './components/Quiz/Quiz';
-
+import { setIsMobile } from './store/mainSettingsReducer';
 // type AddressType = {
 //   country: null | string,
 //   city: null | string,
@@ -25,7 +26,23 @@ import Quiz from './components/Quiz/Quiz';
 //   }]
 // }
 
-function App() {
+type Props = {
+  setIsMobile: (width: number) => void
+}
+
+function App(props: Props) {
+  const widthHandler = () => {
+    props.setIsMobile(window.innerWidth)
+  }
+  const subscribeResize = () => window.addEventListener('resize', widthHandler, true);
+  const unsubscribeResize = () => window.removeEventListener('resize', widthHandler, true);
+  useEffect(() => {
+    props.setIsMobile(window.innerWidth);
+  }, [props.setIsMobile])
+  useEffect(() => {
+    subscribeResize()
+    return () => unsubscribeResize()
+  })
   return (
     <div className={styles.page}>
       <div className={styles.wrapper}>
@@ -45,4 +62,9 @@ function App() {
   );
 }
 
-export default App;
+const mapStatesToProps = (state: any) => {
+  return {
+    isMobile: state.mainSettings.isMobile
+  }
+}
+export default connect(mapStatesToProps, { setIsMobile })(App);
