@@ -3,33 +3,31 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 60px;
+  border-radius: 8px;
   .point {
     position: relative;
-    width: 30px;
-    height: 30px;
-    background-color: #e8f4fa;
-    border: 1px solid #b7b7b7;
-    border-radius: 50%;
-    margin: 0 6px;
+    width: 38px;
+    height: 23px;
+    background-color: #3c3c3c;
     display: inline-block;
     box-sizing: border-box;
-    .image {
-      position: absolute;
-      left: -1px;
-      top: -1px;
-      width: 30px;
-      height: 30px;
-      opacity: 0;
-      transition: 0.2s opacity;
-      &.wrong {
-        opacity: 1;
-        background-image: url("./../../../assets/images/cross.svg");
-      }
-      &.right {
-        opacity: 1;
-        background-image: url("./../../../assets/images/tick.svg");
-      }
+    transition: .1s background-color;
+    &:first-child {
+      border-bottom-left-radius: 8px;
+      border-top-left-radius: 8px;
+    }
+    &:last-child {
+      border-bottom-right-radius: 8px;
+      border-top-right-radius: 8px;
+    }
+    &:not(:first-child) {
+      margin-left: 2px;
+    }
+    &.wrong {
+      background-color: var(--border-wrong);
+    }
+    &.right {
+      background-color: var(--border-right);
     }
   }
 }

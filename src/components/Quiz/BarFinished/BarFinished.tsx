@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import styles from './BarFinished.module.scss';
+import classnames from 'classnames';
 
 type Props = {
   side: string,
@@ -19,7 +20,8 @@ export const BarFinished = (props: Props) => {
     <div className={styles.wrapper}>
       {
         listFinished.map((el: unknown, i: number) => {
-          return <div className={styles.item} key={i}>
+          return <div className={classnames(styles.item, {[styles.wrong]: listFinished[i] && !listFinished[i][0], 
+            [styles.right]: listFinished[i] && listFinished[i][0]}) } key={i}>
             <div className={styles.imageWrap}>
               {listFinished[i] && <img src={listFinished[i][2]} className={styles.image}></img>}
             </div>

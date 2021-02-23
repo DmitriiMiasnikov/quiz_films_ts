@@ -10,7 +10,9 @@ export const QuizDom = (props: any) => {
   return (
     <div className={styles.wrapper}>
       {
-        props.quiz && <ProgressBar answers={props.answers} quiz={props.quiz} />
+        props.quiz && <div className={styles.progressBarWrap}>
+          <ProgressBar answers={props.answers} quiz={props.quiz} />
+        </div>
       }
       <div className={classnames(styles.content, { [styles.hide]: props.hidePrevImage })}>
         {!props.isMobile && props.quiz && props.step < props.quiz.questions.length &&

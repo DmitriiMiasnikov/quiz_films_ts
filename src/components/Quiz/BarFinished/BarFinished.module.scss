@@ -5,6 +5,7 @@
   align-items: center;
   justify-content: flex-start;
   padding: 0 5px;
+
   .item {
     position: relative;
     width: 100%;
@@ -13,11 +14,20 @@
     margin-bottom: 10px;
     box-sizing: border-box;
     overflow: hidden;
+    border-radius: 6px;
+    &.right {
+      border: 2px solid var(--border-right);
+    }
+    &.wrong {
+      border: 2px solid var(--border-wrong);
+    }
+
     .imageWrap {
       height: 100%;
       display: flex;
       align-items: center;
       justify-content: center;
+
       .image {
         height: 100%;
       }

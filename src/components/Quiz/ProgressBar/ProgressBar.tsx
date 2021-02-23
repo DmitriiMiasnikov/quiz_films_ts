@@ -12,10 +12,10 @@ export const ProgressBar = (props: Props) => {
     <div className={styles.wrapper}>
       {
         props.quiz.questions.map((el: unknown, i: number) => {
-          return <div className={styles.point} key={i}><div className={classnames(styles.image, {
+          return <div key={i} className={classnames(styles.point, {
             [styles.wrong]: !props.answers[i] ? false : props.answers[i][0] === false,
             [styles.right]: !props.answers[i] ? false : props.answers[i][0] === true
-          })}></div></div>
+          })}></div>;
         })
       }
     </div>

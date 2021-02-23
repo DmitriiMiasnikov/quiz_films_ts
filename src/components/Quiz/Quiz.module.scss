@@ -2,6 +2,13 @@
   position: relative;
   box-sizing: border-box;
   width: 100%;
+  .progressBarWrap {
+    width: 100%;
+    height: 60px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
   .content {
     overflow: hidden;
     display: flex;
