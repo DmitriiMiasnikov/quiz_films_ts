@@ -25,10 +25,10 @@ export const ListPageDom = (props: Props) => {
           <Filters />
         </div>
       }
-      <div className={styles.list}>
+      <div className={classnames(styles.list, { [styles.isMobile]: props.isMobile })}>
         {Boolean(props.list.length) && props.list.map((el: any, i: number) => {
           return <NavLink to={`/quiz/${el.name}`}
-            className={classnames(styles.item, { [styles.isMobile]: props.isMobile })} key={i}>
+            className={classnames(styles.item)} key={i}>
             <div className={styles.itemInner}>
               <div className={styles.content}>
                 <img src={`https://dmitrii.amyasnikov.pro/films/${el.randomName}_${0}.jpg`}

@@ -17,9 +17,6 @@
           transform: scale(1.05) translateZ(0);
         }
       }
-      &.isMobile {
-        width: 48%;
-      }
       .itemInner {
         height: 0px;
         padding-top: 65%;
@@ -53,6 +50,11 @@
         }
       }
     }
+    &.isMobile {
+      .item {
+        width: 48%;
+      }
+    }
   }
   .filters {
     width: 100%;
@@ -71,6 +73,7 @@
   }
   .buttonAddItemsWrapper {
     margin-top: 15px;
+    padding-bottom: 25px;
     display: flex;
     justify-content: center;
     align-items: center;

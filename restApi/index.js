@@ -2,6 +2,7 @@ const express = require('express');
 const mongoose = require('mongoose');
 const config = require('config');
 const quizRoutes = require('./routes/quizRoutes');
+const usersRoutes = require('./routes/usersRoutes');
 const cors = require('cors');
 
 const app = express();
@@ -9,6 +10,7 @@ const app = express();
 app.use(express.json({ extended: true }))
 app.use(cors());
 app.options('*', cors());
+app.use('/users', usersRoutes);
 app.use('/quiz', quizRoutes);
 
 const start = async () => {

@@ -17,3 +17,14 @@ export const quizApi = {
     return res
   }
 }
+
+export const userApi = {
+  async registration(userName, password, email) {
+    const res = await instance.post(`users/registration/?userName=${userName}&password=${password}&email=${email}`);
+    return res;
+  },
+  async authorization(userName, password) {
+    const res = await instance.get(`users/authorization/?userName=${userName}&password=${password}`);
+    return res;
+  }
+}

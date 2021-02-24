@@ -10,6 +10,9 @@ type Props = {
 export const Result = (props: Props) => {
   return (
     <div className={styles.wrapper}>
+      <div className={styles.resultText}>
+        {`Верно завершено ${props.answers.map((el: any) => el[0]).filter((el: boolean) => el).length} из ${props.answers.length}.`}
+      </div>
       {
         props.quiz && props.quiz.questions.map((el: unknown, i: number) => {
           return <div className={styles.item} key={i}>
@@ -32,9 +35,6 @@ export const Result = (props: Props) => {
           </div>
         })
       }
-      <div className={styles.resultText}>
-        {`Верно завершено ${props.answers.map((el: any) => el[0]).filter((el: boolean) => el).length} из ${props.answers.length}.`}
-      </div>
     </div>
   )
 } 
