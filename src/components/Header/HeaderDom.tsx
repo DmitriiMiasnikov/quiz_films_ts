@@ -8,7 +8,9 @@ type Props = {
   openCatalogHandler: (name: string) => void,
   isAuth: boolean,
   blockAuthHandler: (show: boolean) => void,
-  showAuthBlock: boolean
+  showAuthBlock: boolean,
+  logout: () => void,
+  user: { userId: number, userName: string }
 }
 
 export const HeaderDom = (props: Props) => {
@@ -48,11 +50,19 @@ export const HeaderDom = (props: Props) => {
           })
         }
       </div>
-      <div className={styles.auth} ref={refLoginMenu}>
+      <div className={styles.loginWrap} ref={refLoginMenu}>
         {!props.isAuth && <div className={styles.buttonAuth}
           onClick={() => props.blockAuthHandler(!props.showAuthBlock)}>Войти</div>}
         {props.showAuthBlock && <div className={styles.authBlock}>
           <Auth />
+        </div>}
+        {props.isAuth && <div className={styles.login}>
+          <div className={styles.user}>
+            {props.user && props.user.userName}
+          </div>
+          <div className={styles.logoutButton} onClick={() => props.logout()}>
+            Выйти
+          </div>
         </div>}
       </div>
     </div>

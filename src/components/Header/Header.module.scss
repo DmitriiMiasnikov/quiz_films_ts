@@ -24,10 +24,8 @@
       }
     }
   }
-  .auth {
+  .loginWrap {
     height: 100%;
-    color: var(--font-link-1);
-    transition: .1s background-color;
     .buttonAuth {
       width: 100%;
       height: 100%;
@@ -35,6 +33,8 @@
       box-sizing: border-box;
       display: flex;
       align-items: center;
+      color: var(--font-link-1);
+      transition: .1s background-color;
       &:hover {
         cursor: pointer;
         background-color: rgb(51, 51, 51);
@@ -45,6 +45,28 @@
       top: 60px;
       right: 5px;
       z-index: 1;
+    }
+    .login {
+      display: flex;
+      flex-direction: row;
+      height: 100%;
+      .user, .logoutButton {
+        padding: 0 15px;
+        display: flex;
+        align-items: center;
+        transition: .1s background-color;
+        &:hover {
+          cursor: pointer;
+          background-color: rgb(51, 51, 51);
+        }
+      }
+      .user {
+        color: var(--font-user);
+        font-weight: bold;
+      }
+      .logoutButton {
+        color: var(--font-link-1);
+      }
     }
   }
 }

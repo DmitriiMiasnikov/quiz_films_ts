@@ -26,5 +26,9 @@ export const userApi = {
   async authorization(userName, password) {
     const res = await instance.get(`users/authorization/?userName=${userName}&password=${password}`);
     return res;
+  },
+  async getUser(id) {
+    const res = await instance.get(`users/id/${id}`);
+    return res;
   }
 }

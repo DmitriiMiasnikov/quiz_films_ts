@@ -25,7 +25,7 @@ router.post(
       err.state = true;
       err.message.push('пароль от 6 до 24 символов');
     }
-    if (validator.validate(email)) {
+    if (!validator.validate(email)) {
       err.state = true;
       err.message.push('некорректный адрес почты');
     }
@@ -49,12 +49,30 @@ router.get(
   '/authorization',
   async (req, res) => {
     try {
-      const user = await Users.findOne({ userName: req.query.userName, password: sha256(req.query.password) })
-      if (user) {
-        res.status(200).json({ user, isAuth: true })
-      } else {
-        res.status(200).json({ isAuth: false })
+      const userName = req.query.userName;
+      const password = req.query.password;
+      let err = {state: false, message: []};
+      const user = await Users.findOne({ userName: userName, password: sha256(password) }, 'userId userName email')
+      if (!user) {
+        err.state = true;
+        err.message.push('неверное имя или пароль');
       }
+      res.status(200).json({ user, isAuth: !err.state || Boolean(user) })
+    } catch (e) {
+      console.log(e)
+    }
+  }
+)
+
+// авторизация пользователя
+// /users/authorization
+router.get(
+  '/id/:id',
+  async (req, res) => {
+    try {
+      const id = Number(req.params.id);
+      const user = await Users.findOne({ userId: id }, 'userId userName email');
+      res.status(200).json({ user })
     } catch (e) {
       console.log(e)
     }
