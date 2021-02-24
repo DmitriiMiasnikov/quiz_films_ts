@@ -12,11 +12,31 @@
     .imageWrap {
       position: relative;
       width: 300px;
+      min-width: 300px;
       height: 200px;
       display: flex;
       justify-content: center;
       overflow: hidden;
       background-color: rgb(29, 29, 29);
+      border-radius: 4px;
+      .right {
+        position: absolute;
+        top: 5px;
+        left: 5px;
+        width: 40px;
+        height: 40px;
+        background-color: #000000c2;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        box-sizing: border-box;
+        border: 3px solid #3d8848;
+        .image {
+          width: 20px;
+          height: 20px;
+        }
+      }
       .image {
         height: 100%;
       }
@@ -34,18 +54,25 @@
         display: flex;
         flex-direction: row;
         .tickCross {
-          width: 30px;
-          height: 30px;
-          &.wrong {
-            background-image: url("./../../../assets/images/cross.svg");
-          }
-          &.right {
-            background-image: url("./../../../assets/images/tick.svg");
+          width: 20px;
+          height: 100%;
+          display: flex;
+          align-items: center;
+          .image {
+            width: 20px;
+            height: 20px;
           }
         }
         .text {
           display: inline-block;
-          margin-left: 15px;
+          margin-left: 10px;
+          color: var(--font-color-1);
+          &.right {
+            color: var(--right);
+          }
+          &.wrong {
+            color: var(--wrong);
+          }
         }
       }
     }
@@ -55,5 +82,37 @@
     font-size: 24px;
     padding-bottom: 8px;
     border-bottom: 2px solid #6e6e6e;
+  }
+}
+
+@media (max-width: 1000px) {
+  .wrapper {
+    .item {
+      .imageWrap {
+        width: 200px;
+        min-width: 200px;
+        height: 130px;
+        .right {
+          width: 30px;
+          height: 30px;
+          .image {
+            width: 15px;
+            height: 15px;
+          }
+        }
+      }
+      .questions {
+        .question {
+          font-size: 20px;
+          .tickCross {
+            width: 15px;
+            .image {
+              width: 15px;
+              height: 15px;
+            }
+          }
+        }
+      }
+    }
   }
 }

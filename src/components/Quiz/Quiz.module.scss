@@ -57,7 +57,7 @@
         flex-direction: column;
         justify-content: space-between;
         .question {
-          background-color: #6e6e6e;
+          background-color: #484848;
           transition: 0.2s background-color;
           font-size: 28px;
           line-height: 30px;
@@ -73,7 +73,7 @@
           }
           &:hover {
             cursor: pointer;
-            background-color: #858585;
+            background-color: #5a5a5a;
           }
           &.wrong {
             background-color: var(--button-wrong);
