@@ -7,27 +7,11 @@ import MainPage from './components/MainPage/MainPage';
 import ListPage from './components/ListPage/ListPage';
 import Quiz from './components/Quiz/Quiz';
 import { setIsMobile } from './store/mainSettingsReducer';
-// type AddressType = {
-//   country: null | string,
-//   city: null | string,
-// }
-// const initialState = {
-//   name: null as string | null,
-//   age: null as number | null,
-//   address: [] as Array<AddressType>
-// }
-// export type initialStateType = typeof initialState;
-// const state: initialStateType = {
-//   name: 'asda',
-//   age: 22,
-//   address: [{
-//     country: 'asas',
-//     city: 'asda'
-//   }]
-// }
+import Registration from './components/Registration/Registration';
 
 type Props = {
-  setIsMobile: (width: number) => void
+  setIsMobile: (width: number) => void,
+  showRegistration: boolean
 }
 
 function App(props: Props) {
@@ -57,6 +41,7 @@ function App(props: Props) {
             <Route path={'/quiz/:quizName'} render={() => <Quiz />} />
           </Switch>
         </div>
+        {props.showRegistration && <Registration />}
       </div>
     </div>
   );
@@ -64,7 +49,8 @@ function App(props: Props) {
 
 const mapStatesToProps = (state: any) => {
   return {
-    isMobile: state.mainSettings.isMobile
+    isMobile: state.mainSettings.isMobile,
+    showRegistration: state.user.showRegistration
   }
 }
 export default connect(mapStatesToProps, { setIsMobile })(App);

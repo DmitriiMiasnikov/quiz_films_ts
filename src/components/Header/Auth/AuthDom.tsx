@@ -6,7 +6,6 @@ import { Field, Form } from 'react-final-form';
 type Props = {
   authorizationHandler: (data: any) => void,
   showRegistrationHandler: () => void,
-  validate: any,
   inputs: {name: string, text: string}[],
   isWrongAuthorization: boolean
 }
@@ -15,7 +14,7 @@ export const AuthDom = (props: Props) => {
   return (
     <div className={styles.wrapper}>
     <Form
-      onSubmit={props.authorizationHandler} validate={props.validate}
+      onSubmit={props.authorizationHandler}
       render={({ handleSubmit, form, submitting }) => (
         <form onSubmit={handleSubmit}>
           {

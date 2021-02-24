@@ -14,12 +14,6 @@ const Auth = (props: Props) => {
     { name: 'name', text: 'имя' },
     { name: 'password', text: 'пароль' },
   ]
-  const validate = (data: any) => {
-    const err = {};
-    // if (!data.name) err.name = 'Введите имя';
-    // if (!data.password) err.password = 'Введите пароль';
-    return err
-  }
   const authorizationHandler = (data: any) => {
     props.userAuthorization(data.name, data.password);
   }
@@ -27,7 +21,7 @@ const Auth = (props: Props) => {
     props.setShowRegistration(true);
   }
   return (
-    <AuthDom {...props} {...{inputs, validate, authorizationHandler, showRegistrationHandler}}/>
+    <AuthDom {...props} {...{inputs, authorizationHandler, showRegistrationHandler}}/>
   )
 }
 

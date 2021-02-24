@@ -2,6 +2,7 @@ const { Router } = require('express');
 const fs = require('fs');
 const sha256 = require('js-sha256');
 const Quiz = require('../models/Quiz');
+const Users = require('./../models/Users');
 const router = Router();
 
 
