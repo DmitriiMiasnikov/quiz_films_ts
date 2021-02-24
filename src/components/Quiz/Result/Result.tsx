@@ -15,6 +15,7 @@ export const Result = (props: Props) => {
       <div className={styles.resultText}>
         {`Верно завершено ${props.answers.map((el: any) => el[0]).filter((el: boolean) => el).length} из ${props.answers.length}.`}
       </div>
+      <div className={styles.list}>
       {
         props.quiz && props.quiz.questions.map((el: unknown, i: number) => {
           return <div className={styles.item} key={i}>
@@ -41,6 +42,7 @@ export const Result = (props: Props) => {
           </div>
         })
       }
+      </div>
     </div>
   )
 } 

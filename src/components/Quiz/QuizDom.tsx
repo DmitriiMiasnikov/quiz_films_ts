@@ -6,7 +6,7 @@ import { Result } from './Result/Result';
 import { BarFinished } from './BarFinished/BarFinished';
 
 export const QuizDom = (props: any) => {
-  const heightQuiz = window.innerHeight - 115;
+  const heightQuiz = window.innerHeight - 105;
   return (
     <div className={styles.wrapper}>
       {
