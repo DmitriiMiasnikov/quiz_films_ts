@@ -5,12 +5,15 @@ const SET_CURRENT_USER_ID = 'SET_CURRENT_USER_ID';
 const SET_IS_WRONG_AUTHORIZATION = 'SET_IS_WRONG_AUTHORIZATION';
 const SET_MY_USER_INFO = 'SET_MY_USER_INFO';
 const SHOW_REGISTRATION = 'SHOW_REGISTRATION';
+const SET_ERRORS_REGISTRATION = 'SET_ERRORS_REGISTRATION';
 
 const initialStates = {
   isAuth: false,
   currentUserId: null,
   isWrongAuthorization: false,
+
   showRegistration: false,
+  errorsRegistration: null,
 }
 
 export const userReducer = (state = initialStates, action: any) => {
@@ -29,6 +32,9 @@ export const userReducer = (state = initialStates, action: any) => {
     }
     case (SHOW_REGISTRATION): {
       return { ...state, showRegistration: action.show }
+    }
+    case (SET_ERRORS_REGISTRATION): {
+      return { ...state, errorsRegistration: action.errors }
     }
     default: break;
   }
@@ -51,15 +57,24 @@ export const setShowRegistration = (show: boolean) => {
   return { type: SHOW_REGISTRATION, show }
 }
 
-export const userRegistration = (userName: string, password: string, email: string) => {
+export const setErrorsRegistration = (errors: string[] | null) => {
+  return { type: SET_ERRORS_REGISTRATION, errors }
+}
+
+export const userRegistration = (userName = '', password = '', email = '') => {
   return async (dispatch: (arg?: any) => void) => {
+    dispatch(setErrorsRegistration(null));
     const res = await userApi.registration(userName, password, email);
     dispatch(setIsAuth(res.data.isAuth));
-    dispatch(setCurrentUserId(res.data.user.userId))
+    if (res.data.isAuth) {
+      dispatch(setCurrentUserId(res.data.user.userId))
+    } else {
+      dispatch(setErrorsRegistration(res.data.err.message));
+    }
   }
 }
 
-export const userAuthorization = (userName: string, password: string) => {
+export const userAuthorization = (userName = '', password = '') => {
   return async (dispatch: (arg?: any) => void) => {
     dispatch(setIsWrongAuthorization(false));
     const res = await userApi.authorization(userName, password);
