@@ -1,21 +1,50 @@
 .wrapper {
   position: relative;
-  width: 100%;
-  height: 55px;
-  background-color: var(--bg-block-1);
   display: flex;
   flex-direction: row;
-
-  .item {
-    padding: 0 10px;
-    height: inherit;
+  justify-content: space-between;
+  width: 100%;
+  height: 55px;
+  font-size: 18px;
+  background-color: var(--bg-block-1);
+  .menuItems {
     display: flex;
-    align-items: center;
-    text-decoration: none;
+    flex-direction: row;
+    height: 100%;
+    .item {
+      padding: 0 10px;
+      height: inherit;
+      display: flex;
+      align-items: center;
+      text-decoration: none;
+      color: var(--font-link-1);
+      transition: .1s background-color;
+      &:hover {
+        background-color: rgb(51, 51, 51);
+      }
+    }
+  }
+  .auth {
+    height: 100%;
     color: var(--font-link-1);
-    transition: .1s color;
-    &:hover {
-      color: var(--font-link-1-hover);
+    transition: .1s background-color;
+    .buttonAuth {
+      width: 100%;
+      height: 100%;
+      padding: 0 15px;
+      box-sizing: border-box;
+      display: flex;
+      align-items: center;
+      &:hover {
+        cursor: pointer;
+        background-color: rgb(51, 51, 51);
+      }
+    }
+    .authBlock {
+      position: absolute;
+      top: 60px;
+      right: 5px;
+      z-index: 1;
     }
   }
 }

@@ -4,11 +4,13 @@ const IS_AUTH = 'IS_AUTH';
 const SET_CURRENT_USER_ID = 'SET_CURRENT_USER_ID';
 const SET_IS_WRONG_AUTHORIZATION = 'SET_IS_WRONG_AUTHORIZATION';
 const SET_MY_USER_INFO = 'SET_MY_USER_INFO';
+const SHOW_REGISTRATION = 'SHOW_REGISTRATION';
 
 const initialStates = {
   isAuth: false,
   currentUserId: null,
   isWrongAuthorization: false,
+  showRegistration: false,
 }
 
 export const userReducer = (state = initialStates, action: any) => {
@@ -24,6 +26,9 @@ export const userReducer = (state = initialStates, action: any) => {
     }
     case (SET_IS_WRONG_AUTHORIZATION): {
       return { ...state, isWrongAuthorization: action.isWrongAuthorization }
+    }
+    case (SHOW_REGISTRATION): {
+      return { ...state, showRegistration: action.show }
     }
     default: break;
   }
@@ -41,6 +46,9 @@ const setMyUserInfoFunc = (myUserInfo: any) => {
 }
 export const setIsWrongAuthorization = (isWrongAuthorization: boolean) => {
   return { type: SET_IS_WRONG_AUTHORIZATION, isWrongAuthorization }
+}
+export const setShowRegistration = (show: boolean) => {
+  return { type: SHOW_REGISTRATION, show }
 }
 
 export const userRegistration = (userName: string, password: string, email: string) => {
