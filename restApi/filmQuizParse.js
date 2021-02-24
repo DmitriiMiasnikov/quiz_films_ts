@@ -19,7 +19,7 @@ const start = async () => {
   }
 }
 start();
-// all = 33
+// all = 0
 const counter = 0;
 const arr = [];
 let count = 0;
@@ -61,10 +61,6 @@ const setDataFilm = (URLfilm) => {
     for (let j = 0; j <= tmpImg.length && j < 3; j++) {
       const imageURL = `https://www.film.ru/${tmpImg[j].value}`;
       if (tmpImg[0].value) {
-        const img = new Image();
-        img.onload = function () {
-          console.log(this.width + 'x' + this.height);
-        }
         img.src = imageURL;
         // const curl = spawn('curl', ['-o', `./imgFilms/${tmpName[0].value.split('/').slice(-1).join('')}_${countImg}.jpg`, imageURL]);
         // curl.stdout.on('data', (data) => {
@@ -102,9 +98,10 @@ const setDataFilm = (URLfilm) => {
 
 async function delayedLog(item) {
   await delay();
-  const pageURL = `https://www.film.ru/movies/a-z/genre/0?page=${item}`;
+  // адрес списка
+  const pageURL = `https://www.imdb.com/chart/top/?ref_=nv_mv_250`;
   needle.get(pageURL, async function (err, res) {
-    const doc = new dom({
+    const doc1 = new dom({
       locator: {},
       errorHandler: {
         warning: function (w) { },
@@ -112,14 +109,16 @@ async function delayedLog(item) {
         fatalError: function (e) { console.error(e) }
       }
     }).parseFromString(res.body);
-    const pathFilm = '//*[@class="rating infinite_scroll"]/a/@href';
-    const tmpItems = xpath.select(pathFilm, doc);
+    console.log('длина дока ', doc1.length);
+    // ссылка на фильм в списке
+    const pathFilm = '//*[@class="lister-list"]//*[@class="titleColumn"]/a/@href';
+    const tmpItems = xpath.select(pathFilm, doc1);
     for (let i = 0; i < tmpItems.length; i++) {
-      // console.log(count, tmpItems[i].value);
+      console.log('ссылка на фильм в списке ', count, tmpItems.length, tmpItems[i].value);
       await delay();
-      const filmURL = `https://www.film.ru/${tmpItems[i].value}`;
+      const filmURL = `https://www.imdb.com/${tmpItems[i].value}`;
       needle.get(filmURL, async function (err, res) {
-        const doc = new dom({
+        const doc2 = new dom({
           locator: {},
           errorHandler: {
             warning: function (w) { },
@@ -127,23 +126,76 @@ async function delayedLog(item) {
             fatalError: function (e) { console.error(e) }
           }
         }).parseFromString(res.body);
-        let pathFilm = ".//*[@class='submenu']//a[contains(text(), 'О фильме')]/@href";
-        let tmpPathFilm = xpath.select(pathFilm, doc);
-        if (!tmpPathFilm.length) {
-          pathFilm = ".//*[@class='submenu']//a[contains(text(), 'Кадры')]/@href";
-          tmpPathFilm = xpath.select(pathFilm, doc);
-        }
+        //ссылка на фотки
+        let pathPhotos = ".//*[@id='titleImageStrip']//*[@class='combined-see-more see-more']/a/@href";
+        let tmpPhotos = xpath.select(pathPhotos, doc2);
+          console.log('ссылка на фотки ', count, tmpPhotos[0].value);
+          const allImgURL = `https://www.imdb.com/${tmpPhotos[0].value}`;
+          needle.get(allImgURL, async function (err, res) {
+            const doc3 = new dom({
+              locator: {},
+              errorHandler: {
+                warning: function (w) { },
+                error: function (e) { },
+                fatalError: function (e) { console.error(e) }
+              }
+            }).parseFromString(res.body);
+            // ссылка только на кадры из фильма
+            let pathPhotos = ".//*[@id='media_index_type_filters']//*[a[contains(text(),'Still Frame')]]/@href";
+            let tmpPhotos = xpath.select(pathPhotos, doc3);
+            console.log('ссылка только на кадры ', count, tmpPhotos[0].value);
+            const imgagesURL = `https://www.imdb.com/${tmpPhotos[0].value}`;
+            needle.get(imgagesURL, async function (err, res) {
+              const doc4 = new dom({
+                locator: {},
+                errorHandler: {
+                  warning: function (w) { },
+                  error: function (e) { },
+                  fatalError: function (e) { console.error(e) }
+                }
+              }).parseFromString(res.body);
+              // массив ссылок на конкретное фото
+              let pathPhoto = ".//*[@id='media_index_thumbnail_grid']/a/@href";
+              let tmpPhoto = xpath.select(pathPhoto, doc4);
+              for(let key = 0; key < tmpPhoto.length; key++) {
+                console.log('массив ссылок на конкретное фото ', count, tmpPhoto[key].value);
+                const filmURL = `https://www.imdb.com/${tmpPhoto[key].value}`;
+                needle.get(filmURL, async function (err, res) {
+                  const doc5 = new dom({
+                    locator: {},
+                    errorHandler: {
+                      warning: function (w) { },
+                      error: function (e) { },
+                      fatalError: function (e) { console.error(e) }
+                    }
+                  }).parseFromString(res.body);
+                  //скачиваем фото
+                  let pathPhotoLink = ".//*[@data-testid='media-viewer']//*[contains(@class, 'MediaViewerImagestyles__LandscapeImage-sc')]/@src";
+                  let tmpPhotoLink = xpath.select(pathPhotoLink, doc5);
+                  console.log('скачиваем фото ', count, tmpPhotoLink[1].value);
+                  if (tmpPhotoLink[1].value) {
+                    const curl = spawn('curl', ['-o', `./imgFilms/1.jpg`, tmpPhotoLink[1].value]);
+                    curl.stdout.on('data', (data) => {
+                      console.log(`stdout: ${data}`);
+                    });
+                    countImg = countImg + 1;
+                  } else {
+                    console.log('no img');
+                  }
+                })
+              }
+            }) 
+          }) 
         // console.log(i, tmpPathFilm[0].value);
-        setDataFilm(tmpPathFilm[0].value);
+        // setDataFilm(tmpPathFilm[0].value);
       })
-      await delay();
       count = count + 1;
     }
   });
 }
 processArray(arr);
 async function processArray(arr) {
-  for (let i = 0; i <= counter; i++) {
+  for (let i = count; i <= counter; i++) {
     if (true) {
       arr.push(i);
     }
