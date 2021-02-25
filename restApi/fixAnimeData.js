@@ -4,7 +4,7 @@ const xpath = require("xpath");
 const dom = require("xmldom").DOMParser;
 const fs = require('fs');
 const config = require('config');
-const Animation = require('./models/Animation');
+const FilmByQuiz = require('./models/FilmByQuiz');
 
 const start = async () => {
   try {
@@ -18,41 +18,34 @@ const start = async () => {
   }
 }
 start();
-let allAnimation;
-// последний id 10750
-const counter = 10750;
+let films;
+
+const counter = 339;
 const arr = [];
 
-// function delay() {
-//   return new Promise(resolve => setTimeout(resolve, 1000));
-// }
 async function delayedLog(item) {
   try {
-    const animationToUpdate = await Animation.findOne({ animationId: item });
-    let dateUpdate = animationToUpdate.date;
-    let dateStart = '';
-    let dateEnd = '';
-    if (dateUpdate.length > 3) {
-      dateStart = dateUpdate[2] + '-' + dateUpdate[1] + '-' + dateUpdate[0];
-      dateEnd = dateUpdate[5] + '-' + dateUpdate[4] + '-' + dateUpdate[3];
-    } else {
-      dateStart = dateUpdate[2] + '-' + dateUpdate[1] + '-' + dateUpdate[0];
+    const filmInCatalog = await FilmByQuiz.findOne({ name: item });
+    if (filmInCatalog.quiz.some(el => el !== 'action')) {
+      // console.log(filmInCatalog.quiz)
+      filmInCatalog.quiz.splice(filmInCatalog.quiz.indexOf('action'), 1);
+      await FilmByQuiz.updateOne({ name: item }, { quiz: filmInCatalog.quiz });
+      // console.log(filmInCatalog.quiz);
+      // filmInCatalog.quiz = filmInCatalog.quiz.splice(filmInCatalog.quiz.indexOf('action'), 1)
+    } else if (filmInCatalog.quiz.length === 1 && filmInCatalog[0] === 'action') {
+      console.log('delete');
+      await FilmByQuiz.deleteOne({ name: item });
     }
-    console.log(item, dateStart, dateEnd);
-    // await Animation.updateOne({ animationId: item }, { $unset:{ date: 1 }})
-    // await Animation.updateOne({ animationId: item }, { $set: { dateStart: dateStart, dateEnd: dateEnd ? dateEnd : null } })
   } catch (e) {
     console.log(e)
   }
 }
 processArray(arr);
 async function processArray(arr) {
-  allAnimation = await Animation.find({}, 'animationId');
-  for (let i = 9121; i <= counter; i++) {
-    if (allAnimation.some(el => el.animationId === i)) {
-      arr.push(i);
-    }
-  }
+  films = await FilmByQuiz.find({ quiz: 'action' });
+  films.forEach(el => {
+    arr.push(el.name)
+  })
   for (const item of arr) {
     await delayedLog(item);
   }

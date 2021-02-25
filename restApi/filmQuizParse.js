@@ -184,15 +184,15 @@ async function filmInfo(link) {
                 //   similarFilms: tmpSimilar.length ? tmpSimilar.map(el => el.value) : null,
                 //   images: tmpImages,
                 // })
-                console.log('done');
-                const film = new FilmByQuiz({
-                  name: tmpName.length ? name : null,
-                  title: tmpTitle.length ? tmpTitle[0].value : null,
-                  quiz: ['top250'],
-                  similarFilms: tmpSimilar.length ? tmpSimilar.map(el => el.value) : null,
-                  images: tmpImages,
-                })
-                await film.save()
+                // console.log('done');
+                // const film = new FilmByQuiz({
+                //   name: tmpName.length ? name : null,
+                //   title: tmpTitle.length ? tmpTitle[0].value : null,
+                //   quiz: ['top250'],
+                //   similarFilms: tmpSimilar.length ? tmpSimilar.map(el => el.value) : null,
+                //   images: tmpImages,
+                // })
+                // await film.save()
               } else {
                 if (!tmpName.length) console.log('tmpName.length')
                 if (!tmpTitle.length) console.log('!title')
