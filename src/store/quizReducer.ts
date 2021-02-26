@@ -10,12 +10,11 @@ const TOGGLE_INACTIVE_BUTTONS = 'TOGGLE_INACTIVE_BUTTONS';
 type InitialStates = {
   currentQuiz: {
     name: string,
-    title: string,
-    randomName: string
+    questions: []
   }[] | null,
   step: number,
   answers: Array<string>,
-  hideArrow: boolean
+  hideArrow: boolean,
 }
 
 const initialStates: InitialStates = {
@@ -43,7 +42,7 @@ export const quizReducer = (state = initialStates, action: any) => {
             return null
           } else if (i < action.step) {
             return state.answers[i]
-          } else if (action.answer === action.quiz.questions[action.step].currect.name) {
+          } else if (action.answer === action.quiz.questions[action.step].currect) {
             return [true, action.item, action.currentImage]
           } else return [false, action.item, action.currentImage]
         })
@@ -63,7 +62,7 @@ export const stepUp = () => {
   return { type: STEP_UP }
 }
 export const checkAnswer = (answer: any, step: number, item: number, quiz: any, currentImage: string) => {
-  return { type: CHECK_ANSWER , answer, step, item, quiz, currentImage }
+  return { type: CHECK_ANSWER, answer, step, item, quiz, currentImage }
 }
 export const getQuiz = (name: string) => {
   return async (dispatch: any) => {

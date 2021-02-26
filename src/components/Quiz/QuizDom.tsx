@@ -28,13 +28,13 @@ export const QuizDom = (props: any) => {
             </div>
             <div className={styles.questions}>
               {
-                props.quiz.questions[props.step].options.map((el: any, i: number) => {
+                props.quiz.questions[props.step].options.map((el: string, i: number) => {
                   return <div className={classnames(styles.question, {
                     [styles.right]: props.answers[props.step] && i === props.answers[props.step][1] && props.answers[props.step][0],
                     [styles.wrong]: props.answers[props.step] && i === props.answers[props.step][1] && !props.answers[props.step][0]
                   })} key={i}
-                    onClick={() => props.checkAnswerFunc(el.name, props.step, i, props.quiz.questions[props.step].image)}>
-                    {el.title}</div>
+                    onClick={() => props.checkAnswerFunc(el, props.step, i, props.quiz.questions[props.step].image)}>
+                    {el}</div>
                 })
               }
             </div>

@@ -9,7 +9,6 @@ const Quiz = (props: any) => {
   const [hidePrevImage, setHidePrevImage] = useState(false);
   const [inactiveButtons, setInactiveButtons] = useState(false);
   const [quiz, setQuiz] = useState(null);
-
   const shuffleAnswers = (currentQuiz: any) => {
     const shuffleFunc = (arr: any) => arr.map((a: any) => [Math.random(), a])
       .sort((a: any, b: any) => a[0] - b[0]).map((a: any) => a[1]);
@@ -22,8 +21,7 @@ const Quiz = (props: any) => {
       return el
     })
     shuffledArr.questions = shuffledArr.questions.map((el: any, i: number) => {
-      const currentImage = `${el.currect.name}_${Math.floor(Math.random() * 5)}`;
-      const imageLink = `https://dmitrii.amyasnikov.pro/films/${currentImage}.jpg`;
+      const imageLink = `https://dmitrii.amyasnikov.pro/films/${el.image}.jpg`;
       return { ...el, image: imageLink }
     })
     setQuiz(shuffledArr);

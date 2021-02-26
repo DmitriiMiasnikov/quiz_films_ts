@@ -25,16 +25,16 @@ export const Result = (props: Props) => {
             </div>
             <div className={styles.questions}>
               {
-                props.quiz.questions[i].options.map((el: { title: string, name: string }, item: number) => {
+                props.quiz.questions[i].options.map((el: string, item: number) => {
                   return <div className={styles.question} key={item}>
                     <div className={classnames(styles.tickCross)}>
-                      {props.quiz.questions[i].currect.name === el.name && <img src={tick} className={styles.image} />}
+                      {props.quiz.questions[i].currect === el && <img src={tick} className={styles.image} />}
                       {props.answers[i][1] === item && props.answers[i][0] === false && <img src={cross} className={styles.image} />}
                     </div>
                     <div className={classnames(styles.text, {
                       [styles.wrong]: props.answers[i][1] === item && props.answers[i][0] === false,
-                      [styles.right]: props.quiz.questions[i].currect.name === el.name
-                    })}>{el.title}</div>
+                      [styles.right]: props.quiz.questions[i].currect === el
+                    })}>{el}</div>
                   </div>
                 })
               }

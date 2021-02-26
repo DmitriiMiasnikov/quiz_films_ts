@@ -1,58 +1,78 @@
-const { Router } = require('express');
-const fs = require('fs');
-const Quiz = require('../models/Quiz');
+const { Router } = require("express");
+const fs = require("fs");
+const Quiz = require("../models/Quiz");
+const fimByQuiz = require("../models/FilmByQuiz");
 const router = Router();
-
 
 // получение списка
 // quiz/list/
-router.get(
-  '/list/:page',
-  async (req, res) => {
-    try {
-      const page = Number(req.params.page);
-      const catalog = req.query.catalog;
-      const filter = req.query.filter;
-      const counter = 20;
-      let quizList;
-      if (catalog === 'films') {
-        if (filter === 'no') {
-          quizList = await Quiz.find({}, 'name title questions')
-            .skip(counter * page - counter).limit(counter);
-        } else {
-          quizList = await Quiz.find({ name: { $regex: filter, $options: 'i' } }, 'name title questions')
-            .sort({ name: 1 })
-            .skip(counter * page - counter).limit(counter);
-        }
+router.get("/list/:page", async (req, res) => {
+  try {
+    const page = Number(req.params.page);
+    const quizAll = [
+      { name: "action", title: 'Боевики' },
+      { name: "advanture", title: 'Приключения' },
+      { name: "animation", title: 'Анимация' },
+      { name: "biography", title: 'Биографические' },
+      { name: "comedy", title: 'Комедии' },
+      { name: "crime", title: 'Преступления' },
+      { name: "drama", title: 'Драмы' },
+      { name: "family", title: 'Семейные' },
+      { name: "fantasy", title: 'Фентези' },
+      { name: "history", title: 'Исторические' },
+      { name: "horror", title: 'Ужасы' },
+      { name: "music", title: 'Музыкальные' },
+      { name: "musical", title: 'Мюзиклы' },
+      { name: "mystery", title: 'Мистика' },
+      { name: "romance", title: 'Романтика' },
+      { name: "sci_fi", title: 'Фантастика' },
+      { name: "sport", title: 'Спорт' },
+      { name: "thriller", title: 'Триллеры' },
+      { name: "war", title: 'Военные' },
+      { name: "western", title: 'Вестерны' },
+      { name: "top250", title: 'Топ 250' },
+    ];
+    allFilms = await fimByQuiz.find({})
+    const list = quizAll.map((el => {
+      filmsByGenre = allFilms.filter(item => item.name === el.name)
+      randomName = filmsByGenre[Math.floor(Math.random() * filmsByGenre.length)]
+      return {
+        name: el.name,
+        title: el.title,
+        randomName: randomName
       }
-      const list = quizList.map(el => {
-        return {
-          name: el.name,
-          title: el.title,
-          randomName: el.questions[Math.floor(Math.random() * el.questions.length)].currect.name
-        };
-      })
-      res.status(200).json({ list });
-    } catch (e) {
-      console.log(e)
-    }
+    })).slice(page * 12 - 12, page * 12)
+    
+    res.status(200).json({ list });
+  } catch (e) {
+    console.log(e);
   }
-)
+});
 
-// получение списка
+// получение теста
 // quiz/:quizName
-router.get(
-  '/:quizName',
-  async (req, res) => {
-    try {
-      const quizName = req.params.quizName;
-      const quiz = await Quiz.findOne({ name: quizName }, 'name title questions');
-      res.status(200).json({ quiz });
-    } catch (e) {
-      console.log(e)
+router.get("/:quizName", async (req, res) => {
+  try {
+    const quizName = req.params.quizName;
+    const filmsByQuiz = await fimByQuiz.find({ quiz: quizName });
+    const shuffleFunc = (arr) => arr.map((a) => [Math.random(), a])
+      .sort((a, b) => a[0] - b[0]).map((a) => a[1]);
+    let tenFilms = shuffleFunc(filmsByQuiz).slice(0, 10);
+    const questions = tenFilms.map(el => {
+      return {
+        currect: el.title,
+        image: el.images[Math.floor(Math.random() * el.images.length)],
+        options: shuffleFunc(el.similarFilms).slice(0, 4).concat(el.title)
+      }
+    })
+    const quiz = {
+      name: quizName,
+      questions: questions
     }
+    res.status(200).json({ quiz });
+  } catch (e) {
+    console.log(e);
   }
-)
-
+});
 
 module.exports = router;
