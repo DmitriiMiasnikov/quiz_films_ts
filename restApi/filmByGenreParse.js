@@ -22,16 +22,17 @@ start();
 // all = 0
 const counter = 6;
 const arr = [];
-let count = 3;
-const genre = ['action']
-
+let count = 0;
+const genre = ['action', 'advanture', 'animation', 'biography', 'comedy', 'crime', 'drama', 'family', 'fantasy', 'history', 
+  'horror', 'music', 'musical', 'mystery', 'romance', 'sci_fi', 'sport', 'thriller', 'war', 'western']
+// первая страница по всем жанрам
 function delay() {
   return new Promise(resolve => setTimeout(resolve, 1000));
 }
 
 async function delayedLog(item) {
   // адрес списка
-  const pageURL = `https://www.imdb.com/search/title/?title_type=feature&num_votes=25000,&genres=${genre[0]}&view=simple&sort=user_rating,desc&start=${item * 50 + 1}&ref_=adv_nxt`;
+  const pageURL = `https://www.imdb.com/search/title/?title_type=feature&num_votes=25000,&genres=${item}&view=simple&sort=user_rating,desc&start=${1}&ref_=adv_nxt`;
   // console.log(pageURL);
   await needle('get', pageURL)
     .then(async function (res) {
@@ -54,7 +55,7 @@ async function delayedLog(item) {
         for (key of arrFilms) {
           // console.log(arrFilms.length);
           // console.log('ссылка на фильм в списке ', count, tmpItems.length, `https://www.imdb.com/${tmpItems[key].value}`);
-          await filmInfo(tmpItems[key].value);
+          await filmInfo(tmpItems[key].value, item);
         }
       } catch (e) {
         console.log(e)
@@ -62,7 +63,7 @@ async function delayedLog(item) {
     }).catch(e => console.log(e));
 }
 
-async function filmInfo(link) {
+async function filmInfo(link, item) {
   console.log(count);
   const filmURL = `https://www.imdb.com/${link}`;
   await needle('get', filmURL)
@@ -87,9 +88,10 @@ async function filmInfo(link) {
       // console.log('название ', tmpTitle[0].value, name, tmpSimilar.map(el => el.value));
       const filmInCatalog = await FilmByQuiz.findOne({ name: name });
       if (filmInCatalog) {
-        if (!filmInCatalog.quiz.includes(genre[0])) {
-          quizUpdate = filmInCatalog.quiz.concat(genre[0])
+        if (!filmInCatalog.quiz.includes(item)) {
+          quizUpdate = filmInCatalog.quiz.concat(item)
           await FilmByQuiz.updateOne({ name: name }, { quiz: quizUpdate });
+          console.log('add genre')
         }
       } else {
         //ссылка на фотки
@@ -188,15 +190,15 @@ async function filmInfo(link) {
                   // console.log({
                   //   name: tmpName.length ? name : null,
                   //   title: tmpTitle.length ? tmpTitle[0].value : null,
-                  //   quiz: [genre[0]],
+                  //   quiz: [item],
                   //   similarFilms: tmpSimilar.length ? tmpSimilar.map(el => el.value) : null,
                   //   images: tmpImages,
                   // })
-                  console.log('done');
+                  console.log('done', count, item);
                   const film = new FilmByQuiz({
                     name: tmpName.length ? name : null,
                     title: tmpTitle.length ? tmpTitle[0].value : null,
-                    quiz: ['top250'],
+                    quiz: [item],
                     similarFilms: tmpSimilar.length ? tmpSimilar.map(el => el.value) : null,
                     images: tmpImages,
                   })
@@ -214,12 +216,12 @@ async function filmInfo(link) {
 
 processArray(arr);
 async function processArray(arr) {
-  for (let i = count; i <= counter; i++) {
-    if (true) {
-      arr.push(i);
-    }
-  }
-  for (const item of arr) {
+  // for (let i = 0; i <= genre.length; i++) {
+  //   if (true) {
+  //     arr.push(genre[i]);
+  //   }
+  // }
+  for (const item of genre) {
     await delayedLog(item);
   }
 }

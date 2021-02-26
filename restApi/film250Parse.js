@@ -82,7 +82,14 @@ async function filmInfo(link) {
 
       const name = tmpName[0].data.toLowerCase().split(' ').join('_').split(':').join('_');
       // console.log('название ', tmpTitle[0].value, name, tmpSimilar.map(el => el.value));
-
+      const filmInCatalog = await FilmByQuiz.findOne({ name: name });
+      if (filmInCatalog) {
+        if (!filmInCatalog.quiz.includes('top250')) {
+          quizUpdate = filmInCatalog.quiz.concat('top250')
+          await FilmByQuiz.updateOne({ name: name }, { quiz: quizUpdate });
+          console.log('add genre')
+        }
+      } else {
       //ссылка на фотки
       let pathPhotos = ".//*[@id='titleImageStrip']//*[@class='combined-see-more see-more']/a/@href";
       let tmpPhotos = xpath.select(pathPhotos, doc2);
@@ -184,21 +191,22 @@ async function filmInfo(link) {
                 //   similarFilms: tmpSimilar.length ? tmpSimilar.map(el => el.value) : null,
                 //   images: tmpImages,
                 // })
-                // console.log('done');
-                // const film = new FilmByQuiz({
-                //   name: tmpName.length ? name : null,
-                //   title: tmpTitle.length ? tmpTitle[0].value : null,
-                //   quiz: ['top250'],
-                //   similarFilms: tmpSimilar.length ? tmpSimilar.map(el => el.value) : null,
-                //   images: tmpImages,
-                // })
-                // await film.save()
+                console.log('done', count, 'top250');
+                const film = new FilmByQuiz({
+                  name: tmpName.length ? name : null,
+                  title: tmpTitle.length ? tmpTitle[0].value : null,
+                  quiz: ['top250'],
+                  similarFilms: tmpSimilar.length ? tmpSimilar.map(el => el.value) : null,
+                  images: tmpImages,
+                })
+                await film.save()
               } else {
                 if (!tmpName.length) console.log('tmpName.length')
                 if (!tmpTitle.length) console.log('!title')
               }
             }).catch(e => console.log(e));
         }).catch(e => console.log(e));
+      }
     }).catch(e => console.log(e));
   count = count + 1;
 }
