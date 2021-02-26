@@ -22,6 +22,10 @@ export const statisticsApi = {
   async setStatisticsQuiz(name, score) {
     const res = await instance.put(`statistics/${name}?score=${score}`);
     return res
+  },
+  async getStatisticsQuiz(name) {
+    const res = await instance.get(`statistics/${name}`);
+    return res
   }
 }
 

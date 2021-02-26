@@ -1,34 +1,40 @@
 import { statisticsApi } from "../api/api";
 
-// const SET_CURRENT_QUIZ = 'SET_CURRENT_QUIZ';
+const GET_STATISTICS_QUIZ = 'GET_STATISTICS_QUIZ';
 
 type InitialStates = {
-  // currentQuiz: {
-  //   name: string,
-  //   questions: []
-  // }[] | null,
+  statisticsQuiz: any
 }
 
 const initialStates: InitialStates = {
-  // currentQuiz: null,
+  statisticsQuiz: null,
 }
 
 export const statisticsReducer = (state = initialStates, action: any) => {
   switch (action.type) {
-    // case (SET_CURRENT_QUIZ): {
-    //   return { ...state, currentQuiz: action.quiz }
-    // }
+    case (GET_STATISTICS_QUIZ): {
+      const newStat = state.statisticsQuiz || {}
+      newStat[action.quizName] = action.statisticsQuiz;
+      return { ...state, statisticsQuiz: newStat }
+    }
     default: break;
   }
   return state
 }
-// const setCurrentQuizFunc = (quiz: any) => {
-//   return { type: SET_CURRENT_QUIZ, quiz }
-// }
+
+const getStatisticsQuizFunc = (statisticsQuiz: any, quizName: string) => {
+  return { type: GET_STATISTICS_QUIZ, statisticsQuiz, quizName }
+}
 
 export const setStatisticsQuiz = (name: string, score: number) => {
   return async (dispatch: any) => {
     const res = await statisticsApi.setStatisticsQuiz(name, score)
-    // dispatch(setCurrentQuizFunc(res.data.quiz))
+  }
+}
+
+export const getStatisticsQuiz = (name: string) => {
+  return async (dispatch: any) => {
+    const res = await statisticsApi.getStatisticsQuiz(name)
+    dispatch(getStatisticsQuizFunc(res.data.statisticsQuiz, res.data.quizName))
   }
 }
