@@ -3,6 +3,7 @@ const IS_MOBILE = 'IS_MOBILE';
 
 const initialStates = {
   isMobile: false,
+  imagesLink: 'https://dmitrii.amyasnikov.pro'
 }
 
 export const mainSettingsReducer = (state = initialStates, action: any) => {

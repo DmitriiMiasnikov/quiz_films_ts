@@ -15,23 +15,20 @@ type Props = {
   addItemsHandler: () => void,
   fetching: boolean,
   isMobile: boolean,
+  imagesLink: string,
+  isAllShown: boolean
 }
 
 export const ListPageDom = (props: Props) => {
   return (
     <div className={styles.wrapper}>
-      {/* {
-        <div className={styles.filters}>
-          <Filters />
-        </div>
-      } */}
       <div className={classnames(styles.list, { [styles.isMobile]: props.isMobile })}>
         {Boolean(props.list.length) && props.list.map((el: any, i: number) => {
           return <NavLink to={`/quiz/${el.name}`}
             className={classnames(styles.item)} key={i}>
             <div className={styles.itemInner}>
               <div className={styles.content}>
-                <img src={`https://dmitrii.amyasnikov.pro/films/${el.randomName}_${0}.jpg`}
+                <img src={`${props.imagesLink}/imdb/${el.randomName}.jpg`}
                   className={styles.image} ></img>
                 <div className={styles.title}>
                   {el.title}
@@ -46,11 +43,11 @@ export const ListPageDom = (props: Props) => {
           <img src={loading} alt='' />
         </div>
       }
-      <div className={styles.buttonAddItemsWrapper}>
+      {!props.isAllShown && Boolean(props.list.length) && <div className={styles.buttonAddItemsWrapper}>
         <div className={styles.button} onClick={() => props.addItemsHandler()}>
           Добавить еще
         </div>
-      </div>
+      </div>}
     </div>
   )
 }

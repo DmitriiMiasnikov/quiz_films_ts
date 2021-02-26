@@ -21,7 +21,7 @@ const Quiz = (props: any) => {
       return el
     })
     shuffledArr.questions = shuffledArr.questions.map((el: any, i: number) => {
-      const imageLink = `https://dmitrii.amyasnikov.pro/films/${el.image}.jpg`;
+      const imageLink = `${props.imagesLink}/imdb/${el.image}.jpg`;
       return { ...el, image: imageLink }
     })
     setQuiz(shuffledArr);
@@ -66,7 +66,8 @@ const mapStatesToProps = (state: any) => {
     currentQuiz: state.quiz.currentQuiz,
     step: state.quiz.step,
     answers: state.quiz.answers,
-    isMobile: state.mainSettings.isMobile
+    isMobile: state.mainSettings.isMobile,
+    imagesLink: state.mainSettings.imagesLink
   }
 }
 

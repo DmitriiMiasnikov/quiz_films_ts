@@ -14,6 +14,8 @@ type Props = {
   catalog: string,
   currentFilter: string,
   isMobile: boolean,
+  imagesLink: string,
+  isAllShown: boolean,
   getList: (page: number, catalog: string,currentFilter: string) => void,
   setPage: (page: number) => void,
   clearList: () => void,
@@ -45,7 +47,9 @@ const mapStatesToProps = (state: any) => {
     page: state.list.page,
     currentFilter: state.filters.currentFilter,
     isMobile: state.mainSettings.isMobile,
-    catalog: state.list.catalog
+    catalog: state.list.catalog,
+    imagesLink: state.mainSettings.imagesLink,
+    isAllShown: state.list.isAllShown
   }
 }
 
