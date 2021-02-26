@@ -6,6 +6,7 @@ import { listReducer } from './listReducer';
 import { quizReducer } from './quizReducer';
 import { filtersReducer } from './filtersReducer';
 import { userReducer } from './userReducer';
+import { statisticsReducer } from './statisticsReducer';
 
 const reducers = combineReducers({
   header: headerReducer,
@@ -13,7 +14,8 @@ const reducers = combineReducers({
   list: listReducer,
   quiz: quizReducer,
   filters: filtersReducer,
-  user: userReducer
+  user: userReducer,
+  statistics: statisticsReducer
 })
 
 export const store = createStore(reducers, applyMiddleware(thunkMiddleware))

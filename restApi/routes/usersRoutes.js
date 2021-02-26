@@ -1,8 +1,7 @@
 const { Router } = require('express');
 const fs = require('fs');
 const sha256 = require('js-sha256');
-const validator = require("email-validator")
-const Quiz = require('../models/Quiz');
+const validator = require("email-validator");
 const Users = require('./../models/Users');
 const router = Router();
 
@@ -64,8 +63,8 @@ router.get(
   }
 )
 
-// авторизация пользователя
-// /users/authorization
+// инфа о пользователе
+// /users/id/:id
 router.get(
   '/id/:id',
   async (req, res) => {

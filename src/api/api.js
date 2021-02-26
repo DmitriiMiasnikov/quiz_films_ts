@@ -18,6 +18,13 @@ export const quizApi = {
   }
 }
 
+export const statisticsApi = {
+  async setStatisticsQuiz(name, score) {
+    const res = await instance.put(`statistics/${name}?score=${score}`);
+    return res
+  }
+}
+
 export const userApi = {
   async registration(userName, password, email) {
     const res = await instance.post(`users/registration/?userName=${userName}&password=${password}&email=${email}`);

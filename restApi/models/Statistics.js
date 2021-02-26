@@ -5,18 +5,14 @@ const schema = new Schema({
     type: String,
     required: true
   },
-  title: {
-    type: String,
-    default: ''
+  completed: {
+    type:  Number,
+    default: 0
   },
-  similarFilms: {
-    type:  Schema.Types.Mixed,
-    default: []
-  },
-  keys: {
+  scores: {
     type:  Schema.Types.Mixed,
     default: []
   },
 })
 
-module.exports = model('Film', schema);
+module.exports = model('Statistics', schema);

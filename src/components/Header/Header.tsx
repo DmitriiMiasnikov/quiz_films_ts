@@ -7,10 +7,11 @@ import { setIsAuth, setUserInfo } from '../../store/userReducer';
 type Props = {
   menuItems: Array<{ name: string, text: string, link: string }>,
   allCatalogs: string[],
+  catalog: string,
   isAuth: boolean,
   showRegistration: boolean,
   setIsAuth: (auth: boolean) => void,
-  user: {userId: number, userName: string},
+  user: { userId: number, userName: string },
   setUserInfo: (user: any) => void,
   setCatalog: (catalog: string) => void,
   clearList: () => void
@@ -26,9 +27,11 @@ const Header = (props: Props) => {
   }, [props.showRegistration, props.isAuth])
 
   const openCatalogHandler = (catalog: string) => {
-    if (props.allCatalogs.includes(catalog)) {
+    if (catalog !== props.catalog) {
       props.clearList()
-      props.setCatalog(catalog);
+      if (props.allCatalogs.includes(catalog)) {
+        props.setCatalog(catalog);
+      }
     }
   }
 
@@ -42,7 +45,7 @@ const Header = (props: Props) => {
 
   return (
     <HeaderDom {...props} openCatalogHandler={openCatalogHandler}
-      blockAuthHandler={blockAuthHandler} showAuthBlock={showAuthBlock} logout={logout}/>
+      blockAuthHandler={blockAuthHandler} showAuthBlock={showAuthBlock} logout={logout} />
   )
 }
 
@@ -52,7 +55,8 @@ const mapStatesToProps = (state: any) => {
     allCatalogs: state.list.allCatalogs,
     isAuth: state.user.isAuth,
     showRegistration: state.user.showRegistration,
-    user: state.user.user
+    user: state.user.user,
+    catalog: state.list.catalog
   }
 }
 

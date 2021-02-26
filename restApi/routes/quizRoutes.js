@@ -1,7 +1,6 @@
 const { Router } = require("express");
 const fs = require("fs");
-const Quiz = require("../models/Quiz");
-const fimByQuiz = require("../models/FilmByQuiz");
+const FilmByQuiz = require("../models/FilmByQuiz");
 const router = Router();
 
 // получение списка
@@ -36,10 +35,10 @@ router.get("/list/:page", async (req, res) => {
         { name: "western", title: "Вестерны" },
         { name: "top250", title: "Топ 250" },
       ];
-      allFilms = await fimByQuiz.find({});
+      allFilms = await FilmByQuiz.find({});
     } else if (catalog === "serials") {
       quizAll = [{ name: "action", title: "Боевики" }];
-      allFilms = await fimByQuiz.find({});
+      allFilms = await FilmByQuiz.find({});
     }
     list = quizAll
       .map((el) => {
@@ -64,7 +63,7 @@ router.get("/list/:page", async (req, res) => {
 router.get("/:quizName", async (req, res) => {
   try {
     const quizName = req.params.quizName;
-    const filmsByQuiz = await fimByQuiz.find({ quiz: quizName });
+    const filmsByQuiz = await FilmByQuiz.find({ quiz: quizName });
     const shuffleFunc = (arr) =>
       arr
         .map((a) => [Math.random(), a])

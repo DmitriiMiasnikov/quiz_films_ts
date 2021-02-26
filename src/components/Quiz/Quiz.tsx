@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import { Redirect, withRouter } from 'react-router-dom';
 import { QuizDom } from './QuizDom';
 import { clear, stepUp, checkAnswer, getQuiz } from './../../store/quizReducer';
+import { setStatisticsQuiz } from './../../store/statisticsReducer';
 
 
 const Quiz = (props: any) => {
@@ -40,6 +41,12 @@ const Quiz = (props: any) => {
   useEffect(() => {
     return () => props.clear()
   }, [])
+  
+  useEffect(() => {
+    if (props.step === 10 && props.answers) {
+      props.setStatisticsQuiz(props.currentQuiz.name, props.answers.filter((el: any) => el[0]).length)
+    } 
+  }, [props.step])
 
   const checkAnswerFunc = async (answer: any, step: number, item: number, currentImage: string) => {
     if (quiz) {
@@ -72,5 +79,5 @@ const mapStatesToProps = (state: any) => {
 }
 
 export default connect(
-  mapStatesToProps, { clear, stepUp, checkAnswer, getQuiz }
+  mapStatesToProps, { clear, stepUp, checkAnswer, getQuiz, setStatisticsQuiz }
 )(withRouter(Quiz));
