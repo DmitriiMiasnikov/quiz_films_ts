@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { connect } from 'react-redux';
 import { HeaderDom } from './HeaderDom';
-import { setCatalog } from './../../store/listReducer';
+import { setCatalog, clearList } from './../../store/listReducer';
 import { setIsAuth, setUserInfo } from '../../store/userReducer';
 
 type Props = {
@@ -11,7 +11,9 @@ type Props = {
   showRegistration: boolean,
   setIsAuth: (auth: boolean) => void,
   user: {userId: number, userName: string},
-  setUserInfo: (user: any) => void
+  setUserInfo: (user: any) => void,
+  setCatalog: (catalog: string) => void,
+  clearList: () => void
 }
 
 const Header = (props: Props) => {
@@ -25,7 +27,8 @@ const Header = (props: Props) => {
 
   const openCatalogHandler = (catalog: string) => {
     if (props.allCatalogs.includes(catalog)) {
-      setCatalog(catalog);
+      props.clearList()
+      props.setCatalog(catalog);
     }
   }
 
@@ -53,4 +56,4 @@ const mapStatesToProps = (state: any) => {
   }
 }
 
-export default connect(mapStatesToProps, { setCatalog, setIsAuth, setUserInfo })(Header)
+export default connect(mapStatesToProps, { setCatalog, setIsAuth, setUserInfo, clearList })(Header)

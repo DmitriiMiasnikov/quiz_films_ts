@@ -9,40 +9,59 @@ const router = Router();
 router.get("/list/:page", async (req, res) => {
   try {
     const page = Number(req.params.page);
-    const quizAll = [
-      { name: "action", title: 'Боевики' },
-      { name: "advanture", title: 'Приключения' },
-      { name: "animation", title: 'Анимация' },
-      { name: "biography", title: 'Биографические' },
-      { name: "comedy", title: 'Комедии' },
-      { name: "crime", title: 'Преступления' },
-      { name: "drama", title: 'Драмы' },
-      { name: "family", title: 'Семейные' },
-      { name: "fantasy", title: 'Фентези' },
-      { name: "history", title: 'Исторические' },
-      { name: "horror", title: 'Ужасы' },
-      { name: "music", title: 'Музыкальные' },
-      { name: "musical", title: 'Мюзиклы' },
-      { name: "mystery", title: 'Мистика' },
-      { name: "romance", title: 'Романтика' },
-      { name: "sci_fi", title: 'Фантастика' },
-      { name: "sport", title: 'Спорт' },
-      { name: "thriller", title: 'Триллеры' },
-      { name: "war", title: 'Военные' },
-      { name: "western", title: 'Вестерны' },
-      { name: "top250", title: 'Топ 250' },
-    ];
-    allFilms = await fimByQuiz.find({})
-    const list = quizAll.map((el => {
-      filmsByGenre = allFilms.filter(item => item.name === el.name)
-      randomName = filmsByGenre[Math.floor(Math.random() * filmsByGenre.length)]
-      return {
-        name: el.name,
-        title: el.title,
-        randomName: randomName
-      }
-    })).slice(page * 12 - 12, page * 12)
-    
+    const catalog = req.query.catalog;
+    let list;
+    if (catalog === 'films') {
+      const quizAll = [
+        { name: "action", title: 'Боевики' },
+        { name: "advanture", title: 'Приключения' },
+        { name: "animation", title: 'Анимация' },
+        { name: "biography", title: 'Биографические' },
+        { name: "comedy", title: 'Комедии' },
+        { name: "crime", title: 'Преступления' },
+        { name: "drama", title: 'Драмы' },
+        { name: "family", title: 'Семейные' },
+        { name: "fantasy", title: 'Фентези' },
+        { name: "history", title: 'Исторические' },
+        { name: "horror", title: 'Ужасы' },
+        { name: "music", title: 'Музыкальные' },
+        { name: "musical", title: 'Мюзиклы' },
+        { name: "mystery", title: 'Мистика' },
+        { name: "romance", title: 'Романтика' },
+        { name: "sci_fi", title: 'Фантастика' },
+        { name: "sport", title: 'Спорт' },
+        { name: "thriller", title: 'Триллеры' },
+        { name: "war", title: 'Военные' },
+        { name: "western", title: 'Вестерны' },
+        { name: "top250", title: 'Топ 250' },
+      ];
+      allFilms = await fimByQuiz.find({})
+      list = quizAll.map((el => {
+        filmsByGenre = allFilms.filter(item => item.name === el.name)
+        randomName = filmsByGenre[Math.floor(Math.random() * filmsByGenre.length)]
+        return {
+          name: el.name,
+          title: el.title,
+          randomName: randomName
+        }
+      })).slice(page * 12 - 12, page * 12)
+    } else if (catalog === 'serials') {
+      const quizAll = [
+        { name: "action", title: 'Боевики' },
+      ];
+      allFilms = await fimByQuiz.find({})
+      list = quizAll.map((el => {
+        filmsByGenre = allFilms.filter(item => item.name === el.name)
+        randomName = filmsByGenre[Math.floor(Math.random() * filmsByGenre.length)]
+        return {
+          name: el.name,
+          title: el.title,
+          randomName: randomName
+        }
+      })).slice(page * 12 - 12, page * 12)
+    }
+
+
     res.status(200).json({ list });
   } catch (e) {
     console.log(e);
