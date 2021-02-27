@@ -1,6 +1,7 @@
 const { Router } = require("express");
 const fs = require("fs");
 const FilmByQuiz = require("../models/FilmByQuiz");
+const Quiz = require('./../models/Quiz');
 const router = Router();
 
 // получение списка
@@ -11,35 +12,9 @@ router.get("/list/:page", async (req, res) => {
     const catalog = req.query.catalog;
     let list;
     let quizAll;
-    if (catalog === "films") {
-      quizAll = [
-        { name: "top250", title: "Топ 250" },
-        { name: "action", title: "Боевики" },
-        { name: "advanture", title: "Приключения" },
-        { name: "animation", title: "Анимация" },
-        { name: "biography", title: "Биографические" },
-        { name: "comedy", title: "Комедии" },
-        { name: "crime", title: "Преступления" },
-        { name: "drama", title: "Драмы" },
-        { name: "family", title: "Семейные" },
-        { name: "fantasy", title: "Фентези" },
-        { name: "history", title: "Исторические" },
-        { name: "horror", title: "Ужасы" },
-        { name: "music", title: "Музыкальные" },
-        { name: "musical", title: "Мюзиклы" },
-        { name: "mystery", title: "Мистика" },
-        { name: "romance", title: "Романтика" },
-        { name: "sci_fi", title: "Фантастика" },
-        { name: "sport", title: "Спорт" },
-        { name: "thriller", title: "Триллеры" },
-        { name: "war", title: "Военные" },
-        { name: "western", title: "Вестерны" },
-      ];
-      allFilms = await FilmByQuiz.find({});
-    } else if (catalog === "serials") {
-      quizAll = [{ name: "action", title: "Боевики" }];
-      allFilms = await FilmByQuiz.find({});
-    }
+    const quizzes = await Quiz.findOne({ catalog: catalog });
+    quizAll = quizzes.list;
+    allFilms = await FilmByQuiz.find({});
     list = quizAll
       .map((el) => {
         filmsByGenre = allFilms.filter((item) => item.quiz.includes(el.name));
