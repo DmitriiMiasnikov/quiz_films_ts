@@ -13,10 +13,10 @@ export const ScoresDom = (props: Props) => {
         {props.quizStat && props.scores.map((el: number, i: number) => {
           const maxScore = Math.max(...props.scores)
           const height = props.scores[i] ?
-            `${(maxScore / props.scores[i]) * (100 / maxScore)}%` : '0%'
+            `${(props.scores[i] / maxScore) * (100)}%` : '0%'
           return <div className={styles.scoresCollumn} key={i}
             style={{ height: height }}>
-            {el}
+            {Boolean(el) && el}
           </div>
         })}
       </div>

@@ -11,7 +11,7 @@ export const MainPageDom = (props: Props) => {
     <div className={styles.wrapper}>
       {<div className={styles.statisticsWrap}>
         {props.quizzes.map((el: string, i: number) => {
-          return <div key={i}><Scores quiz={el} /></div>
+          return <div key={i} className={styles.score}><Scores quiz={el} /></div>
         })}
       </div>}
     </div>

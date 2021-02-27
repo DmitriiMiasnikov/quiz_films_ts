@@ -13,10 +13,11 @@ const Scores = (props: Props) => {
   const [scores, setScores] = useState([0]);
   const [quizStat, setQuizStat] = useState(null);
   useEffect(() => {
+    // console.log(props.quiz);
       props.getStatisticsQuiz(props.quiz);
   }, [])
   useEffect(() => {
-    if (props.statisticsQuiz) {
+    if (props.statisticsQuiz && props.statisticsQuiz[props.quiz]) {
       setQuizStat(props.statisticsQuiz[props.quiz]);
       const newScores = [0,1,2,3,4,5,6,7,8,9].map((el: number) => {
         return props.statisticsQuiz[props.quiz].scores.filter((item: any) => el === item).length
