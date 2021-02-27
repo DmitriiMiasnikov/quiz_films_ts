@@ -3,12 +3,13 @@ import { connect } from 'react-redux';
 import { Redirect, withRouter } from 'react-router-dom';
 import { QuizDom } from './QuizDom';
 import { clear, stepUp, checkAnswer, getQuiz } from './../../store/quizReducer';
-import { setStatisticsQuiz } from './../../store/statisticsReducer';
+import { setStatisticsQuiz, getStatisticsQuiz } from './../../store/statisticsReducer';
 
 
 const Quiz = (props: any) => {
   const [hidePrevImage, setHidePrevImage] = useState(false);
   const [inactiveButtons, setInactiveButtons] = useState(false);
+  const [quizStat, setQuizStat] = useState(null);
   const [quiz, setQuiz] = useState(null);
   const shuffleAnswers = (currentQuiz: any) => {
     const shuffleFunc = (arr: any) => arr.map((a: any) => [Math.random(), a])
@@ -45,8 +46,15 @@ const Quiz = (props: any) => {
   useEffect(() => {
     if (props.step === 10 && props.answers) {
       props.setStatisticsQuiz(props.currentQuiz.name, props.answers.filter((el: any) => el[0]).length)
+      props.getStatisticsQuiz(props.currentQuiz.name);
     } 
   }, [props.step])
+
+  useEffect(() => {
+    if (props.statisticsQuiz && props.currentQuiz) {
+      setQuizStat(props.statisticsQuiz[props.currentQuiz.name]);
+    }
+  }, [props.statisticsQuiz])
 
   const checkAnswerFunc = async (answer: any, step: number, item: number, currentImage: string) => {
     if (quiz) {
@@ -64,7 +72,7 @@ const Quiz = (props: any) => {
 
   return (
     <QuizDom {...props} quiz={quiz} checkAnswerFunc={checkAnswerFunc} hidePrevImage={hidePrevImage}
-      inactiveButtons={inactiveButtons} />
+      inactiveButtons={inactiveButtons} quizStat={quizStat}/>
   )
 }
 
@@ -74,10 +82,11 @@ const mapStatesToProps = (state: any) => {
     step: state.quiz.step,
     answers: state.quiz.answers,
     isMobile: state.mainSettings.isMobile,
-    imagesLink: state.mainSettings.imagesLink
+    imagesLink: state.mainSettings.imagesLink,
+    statisticsQuiz: state.statistics.statisticsQuiz,
   }
 }
 
 export default connect(
-  mapStatesToProps, { clear, stepUp, checkAnswer, getQuiz, setStatisticsQuiz }
+  mapStatesToProps, { clear, stepUp, checkAnswer, getQuiz, setStatisticsQuiz, getStatisticsQuiz }
 )(withRouter(Quiz));

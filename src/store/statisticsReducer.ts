@@ -7,7 +7,7 @@ type InitialStates = {
 }
 
 const initialStates: InitialStates = {
-  statisticsQuiz: [],
+  statisticsQuiz: null,
 }
 
 export const statisticsReducer = (state = initialStates, action: any) => {

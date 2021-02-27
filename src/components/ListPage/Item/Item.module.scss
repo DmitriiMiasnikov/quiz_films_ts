@@ -5,8 +5,12 @@
   overflow: hidden;
   margin-bottom: 25px;
   &:hover {
-    .image {
-      transform: scale(1.05) translateZ(0);
+    .itemInner {
+      .content {
+        .image {
+          transform: scale(1.05) translateZ(0);
+        }
+      }
     }
   }
   &.isMobile {
