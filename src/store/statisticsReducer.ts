@@ -7,14 +7,14 @@ type InitialStates = {
 }
 
 const initialStates: InitialStates = {
-  statisticsQuiz: null,
+  statisticsQuiz: [],
 }
 
 export const statisticsReducer = (state = initialStates, action: any) => {
   switch (action.type) {
     case (GET_STATISTICS_QUIZ): {
-      const newStat = state.statisticsQuiz || {}
-      newStat[action.quizName] = action.statisticsQuiz;
+      const newStat = { ...state.statisticsQuiz };
+      newStat[action.quizName] = action.statisticsQuiz || { name: action.quizName, completed: 0, scores: [] };
       return { ...state, statisticsQuiz: newStat }
     }
     default: break;

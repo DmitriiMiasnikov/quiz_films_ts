@@ -8,7 +8,8 @@ type Props = {
   item: any,
   isMobile: boolean,
   statisticsQuiz: any,
-  getStatisticsQuiz: (name: string) => void
+  getStatisticsQuiz: (name: string) => void,
+  page: any
 }
 
 const Item = (props: Props) => {
@@ -19,7 +20,9 @@ const Item = (props: Props) => {
   }, [])
 
   useEffect(() => {
-    if (props.statisticsQuiz) setQuizStat(props.statisticsQuiz[props.item.name])
+    if (props.statisticsQuiz) {
+      setQuizStat(props.statisticsQuiz[props.item.name]);
+    }
   }, [props.statisticsQuiz])
 
   return (
@@ -31,7 +34,8 @@ const mapStatesToProps = (state: any) => {
   return {
     imagesLink: state.mainSettings.imagesLink,
     isMobile: state.mainSettings.isMobile,
-    statisticsQuiz: state.statistics.statisticsQuiz
+    statisticsQuiz: state.statistics.statisticsQuiz,
+    page: state.list.page
   }
 }
 
