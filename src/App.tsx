@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Route, Switch, Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
 import styles from './App.module.scss';
@@ -15,13 +15,16 @@ type Props = {
 }
 
 function App(props: Props) {
+  const [heightWindow, setHeightWindow] = useState(0);
   const widthHandler = () => {
     props.setIsMobile(window.innerWidth)
+    setHeightWindow(window.innerHeight)
   }
   const subscribeResize = () => window.addEventListener('resize', widthHandler, true);
   const unsubscribeResize = () => window.removeEventListener('resize', widthHandler, true);
   useEffect(() => {
     props.setIsMobile(window.innerWidth);
+    setHeightWindow(window.innerHeight);
   }, [props.setIsMobile])
   useEffect(() => {
     subscribeResize()
@@ -29,7 +32,7 @@ function App(props: Props) {
   })
   return (
     <div className={styles.page}>
-      <div className={styles.wrapper}>
+      <div className={styles.wrapper} style={{ minHeight: heightWindow }}>
         <div className={styles.header}>
           <Header />
         </div>

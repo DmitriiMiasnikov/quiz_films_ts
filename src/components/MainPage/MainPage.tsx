@@ -2,15 +2,19 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { MainPageDom } from './MainPageDom';
 
-const MainPage = () => {
+type Props = {
+}
+
+const MainPage = (props: Props) => {
+  const quizzes = ['advanture'];
+
   return (
-    <MainPageDom />
+    <MainPageDom quizzes={quizzes}/>
   )
 }
 
 const mapStatesToProps = (state: any) => {
   return {
-    
   }
 }
 

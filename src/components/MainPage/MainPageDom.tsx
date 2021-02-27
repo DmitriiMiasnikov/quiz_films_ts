@@ -1,10 +1,19 @@
 import React from 'react';
 import styles from './MainPage.module.scss';
+import Scores from './Scores/Scores';
 
-export const MainPageDom = () => {
+type Props = {
+  quizzes: string[]
+}
+
+export const MainPageDom = (props: Props) => {
   return (
     <div className={styles.wrapper}>
-      main page
+      {<div className={styles.statisticsWrap}>
+        {props.quizzes.map((el: string, i: number) => {
+          return <div key={i}><Scores quiz={el} /></div>
+        })}
+      </div>}
     </div>
   )
 }

@@ -13,6 +13,7 @@ router.get("/list/:page", async (req, res) => {
     let quizAll;
     if (catalog === "films") {
       quizAll = [
+        { name: "top250", title: "Топ 250" },
         { name: "action", title: "Боевики" },
         { name: "advanture", title: "Приключения" },
         { name: "animation", title: "Анимация" },
@@ -33,7 +34,6 @@ router.get("/list/:page", async (req, res) => {
         { name: "thriller", title: "Триллеры" },
         { name: "war", title: "Военные" },
         { name: "western", title: "Вестерны" },
-        { name: "top250", title: "Топ 250" },
       ];
       allFilms = await FilmByQuiz.find({});
     } else if (catalog === "serials") {
