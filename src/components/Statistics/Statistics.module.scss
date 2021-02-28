@@ -1,0 +1,14 @@
+.wrapper {
+  position: relative;
+  .statisticsWrap {
+    position: relative;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    padding: 10px;
+    .score {
+      margin-top: 10px;
+      margin-left: 10px;
+    }
+  }
+}

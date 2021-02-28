@@ -8,6 +8,7 @@ import ListPage from './components/ListPage/ListPage';
 import Quiz from './components/Quiz/Quiz';
 import { setIsMobile } from './store/mainSettingsReducer';
 import Registration from './components/Registration/Registration';
+import Statistics from './components/Statistics/Statistics';
 
 type Props = {
   setIsMobile: (width: number) => void,
@@ -40,6 +41,7 @@ function App(props: Props) {
           <Switch>
             <Redirect exact from='/' to='/main' />
             <Route path={'/main'} render={() => <MainPage />} />
+            <Route path={'/statistics'} render={() => <Statistics />} />
             <Route path={'/list/:listName'} render={() => <ListPage />} />
             <Route path={'/quiz/:quizName'} render={() => <Quiz />} />
           </Switch>

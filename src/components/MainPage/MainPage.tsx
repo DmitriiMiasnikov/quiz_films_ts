@@ -6,10 +6,9 @@ type Props = {
 }
 
 const MainPage = (props: Props) => {
-  const quizzes = ['action','advanture'];
 
   return (
-    <MainPageDom quizzes={quizzes}/>
+    <MainPageDom/>
   )
 }
 
