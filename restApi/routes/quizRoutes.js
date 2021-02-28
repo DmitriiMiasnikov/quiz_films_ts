@@ -33,6 +33,19 @@ router.get("/list/:page", async (req, res) => {
   }
 });
 
+// получение всего списка
+// quiz/list/all
+router.get("/list/all/:catalog", async (req, res) => {
+  try {
+    const catalog = req.params.catalog;
+    const quizzes = await Quiz.findOne({ catalog: catalog });
+    const list = quizzes.list;
+    res.status(200).json({ list });
+  } catch (e) {
+    console.log(e);
+  }
+});
+
 // получение теста
 // quiz/:quizName
 router.get("/:quizName", async (req, res) => {

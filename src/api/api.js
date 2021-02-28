@@ -5,6 +5,10 @@ const instance = axios.create({
 })
 
 export const listApi = {
+  async getAllList(catalog) {
+    const res = await instance.get(`quiz/list/all/${catalog}`);
+    return res;
+  },
   async getList(page, catalog, currentFilter) {
     const res = await instance.get(`quiz/list/${page}?catalog=${catalog}&filter=${currentFilter}`);
     return res;

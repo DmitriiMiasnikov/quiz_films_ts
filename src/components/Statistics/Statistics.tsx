@@ -1,18 +1,34 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { connect } from 'react-redux';
 import { StatisticsDom } from './StatisticsDom';
+import { getAllList } from './../../store/listReducer';
 
-const Statistics = () => {
-  const quizzes = ['action','advanture'];
+type Props = {
+  allList: {
+    name: string,
+    title: string,
+  }[],
+  getAllList: (catalog: string) => void
+}
+
+const Statistics = (props: Props) => {
+  const [allListState, setAllListState] = useState([{}]);
+
+  useEffect(() => {
+    props.getAllList('films')
+  }, [])
+  useEffect(() => {
+    setAllListState(props.allList);
+  }, [props.allList])
   return (
-    <StatisticsDom quizzes={quizzes}/>
+    <StatisticsDom quizzes={allListState}/>
   )
 }
 
 const mapStatesToProps = (state: any) => {
   return {
-
+    allList: state.list.allList
   }
 }
 
-export default connect(mapStatesToProps, {})(Statistics)
+export default connect(mapStatesToProps, { getAllList })(Statistics)

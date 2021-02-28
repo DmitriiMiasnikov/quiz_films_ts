@@ -3,15 +3,15 @@ import styles from './Statistics.module.scss';
 import Scores from './Scores/Scores';
 
 type Props = {
-  quizzes: string[]
+  quizzes: any
 }
 
 export const StatisticsDom = (props: Props) => {
   return (
     <div className={styles.wrapper}>
-      {<div className={styles.statisticsWrap}>
-        {props.quizzes.map((el: string, i: number) => {
-          return <div key={i} className={styles.score}><Scores quiz={el} /></div>
+      {props.quizzes && <div className={styles.statisticsWrap}>
+        {props.quizzes.map((el: any, i: number) => {
+          return <div key={i} className={styles.score}><Scores quiz={el.name} /></div>
         })}
       </div>}
     </div>

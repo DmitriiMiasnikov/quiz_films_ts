@@ -5,12 +5,17 @@ const SET_PAGE = 'SET_PAGE';
 const SET_CATALOG = 'SET_CATALOG';
 const CLEAR_LIST = 'CLEAR_LIST';
 const SET_IS_ALL_SHOWN = 'SET_IS_ALL_SHOWN';
+const GET_ALL_LIST = 'GET_ALL_LIST';
 
 type InitialStates = {
   list: {
     name: string,
     title: string,
     randomName: string
+  }[],
+  allList: {
+    name: string,
+    title: string,
   }[],
   page: number,
   catalog: string,
@@ -20,6 +25,7 @@ type InitialStates = {
 
 const initialStates: InitialStates = {
   list: [],
+  allList: [],
   allCatalogs: ['films', 'serials'],
   catalog: 'films',
   page: 1,
@@ -31,6 +37,9 @@ export const listReducer = (state = initialStates, action: any) => {
     case (GET_LIST): {
       const newList = [...state.list, ...action.list]
       return { ...state, list: newList }
+    }
+    case (GET_ALL_LIST): {
+      return { ...state, allList: action.list }
     }
     case (SET_PAGE): {
       return { ...state, page: action.page }
@@ -52,6 +61,9 @@ export const listReducer = (state = initialStates, action: any) => {
 const getListFunc = (list: Array<{ name: string, title: string, randomName: string }>) => {
   return { type: GET_LIST, list }
 }
+const getAllListFunc = (list: Array<{ name: string, title: string }>) => {
+  return { type: GET_ALL_LIST, list }
+}
 export const setPage = (page: number) => {
   return { type: SET_PAGE, page }
 }
@@ -70,5 +82,12 @@ export const getList = (page = 1, catalog: string, currentFilter: string) => {
     const res = await listApi.getList(page, catalog, currentFilter);
     dispatch(getListFunc(res.data.list));
     dispatch(setIsAllShown(res.data.countAll));
+  }
+}
+
+export const getAllList = (catalog: string) => {
+  return async (dispatch: any) => {
+    const res = await listApi.getAllList(catalog);
+    dispatch(getAllListFunc(res.data.list));
   }
 }
