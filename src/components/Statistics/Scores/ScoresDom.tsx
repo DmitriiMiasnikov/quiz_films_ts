@@ -13,8 +13,9 @@ export const ScoresDom = (props: Props) => {
       {
         props.quizStat && <div>
           <div className={styles.title}>
-            {props.title} ({props.quizStat.completed}
-            {['2', '3', '4'].includes(props.quizStat.completed.toString().slice(-1)) ? ' раза' : ' раз'} пройдено)
+            {props.title}
+            {` (${props.quizStat.scores.length}${['2', '3', '4']
+              .includes(props.quizStat.scores.length.toString().slice(-1)) ? ' раза' : ' раз'} пройдено)`}
           </div>
           <div className={styles.scores}>
             {props.scores.map((el: number, i: number) => {

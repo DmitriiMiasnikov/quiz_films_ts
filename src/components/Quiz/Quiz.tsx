@@ -45,8 +45,11 @@ const Quiz = (props: any) => {
   
   useEffect(() => {
     if (props.step === 10 && props.answers) {
-      props.setStatisticsQuiz(props.currentQuiz.name, props.answers.filter((el: any) => el[0]).length)
-      props.getStatisticsQuiz(props.currentQuiz.name);
+      const fetchData = async () => {
+        await props.setStatisticsQuiz(props.currentQuiz.name, props.answers.filter((el: any) => el[0]).length)
+        await props.getStatisticsQuiz(props.currentQuiz.name);
+      }
+      fetchData()
     } 
   }, [props.step])
 

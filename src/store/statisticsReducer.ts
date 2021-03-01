@@ -14,7 +14,7 @@ export const statisticsReducer = (state = initialStates, action: any) => {
   switch (action.type) {
     case (GET_STATISTICS_QUIZ): {
       const newStat = { ...state.statisticsQuiz };
-      newStat[action.quizName] = action.statisticsQuiz || { name: action.quizName, completed: 0, scores: [] };
+      newStat[action.quizName] = action.statisticsQuiz || { name: action.quizName, scores: [] };
       return { ...state, statisticsQuiz: newStat }
     }
     default: break;

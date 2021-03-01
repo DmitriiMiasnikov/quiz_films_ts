@@ -14,12 +14,11 @@ router.put("/:name", async (req, res) => {
     if (quiz) {
       await Statistics.updateOne(
         { name: quizName },
-        { completed: quiz.completed + 1, scores: quiz.scores.concat(score) }
+        { scores: quiz.scores.concat(score) }
       );
     } else {
       const statistics = new Statistics({
         name: quizName,
-        completed: 1,
         scores: [score],
       });
       statistics.save();

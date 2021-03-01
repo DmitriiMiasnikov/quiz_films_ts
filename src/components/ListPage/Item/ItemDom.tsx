@@ -7,7 +7,7 @@ type Props = {
   item: any,
   imagesLink: string,
   isMobile: boolean,
-  quizStat: { name: string, completed: number, scores: number[] } | null
+  quizStat: { name: string, scores: number[] } | null
 }
 
 export const ItemDom = (props: Props) => {
@@ -22,7 +22,7 @@ export const ItemDom = (props: Props) => {
             {props.item.title}
           </div>
           {props.quizStat && <div className={styles.completed}>
-            {props.quizStat.completed}
+            {props.quizStat.scores.length}
           </div>}
         </div>
       </div>

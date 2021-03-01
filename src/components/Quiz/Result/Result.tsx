@@ -17,7 +17,7 @@ export const Result = (props: Props) => {
         <div>{`Ваш результат: ${props.answers.map((el: any) => el[0]).filter((el: boolean) => el).length} из ${props.answers.length}`}</div>
         {props.quizStat && <div className={styles.stat}>
           (средний - {(props.quizStat.scores.reduce((p: number, c: number) => p + c, 0) /
-            props.quizStat.scores.length).toFixed(1)} из {props.quizStat.completed} прохождений)
+            props.quizStat.scores.length).toFixed(1)} из {props.quizStat.scores.length} прохождений)
           </div>}
       </div>
 
