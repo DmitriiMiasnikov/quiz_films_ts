@@ -54,6 +54,11 @@ router.get(
       if (!user) {
         err.state = true;
         err.message.push('неверное имя или пароль');
+      } else {
+        req.session.password = sha256(password);
+        req.session.userName = userName;
+        res.cookie('password', sha256(password));
+        res.cookie('userName', userName);
       }
       res.status(200).json({ user, isAuth: !err.state || Boolean(user) })
     } catch (e) {

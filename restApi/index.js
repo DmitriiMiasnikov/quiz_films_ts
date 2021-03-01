@@ -16,6 +16,7 @@ app.use(express.json({ extended: true }))
 app.use(cors());
 app.options('*', cors());
 app.use(cookieParser());
+app.set('trust proxy', 1)
 app.use(session({
   secret: 'secret',
   name: 'sessionation',
@@ -24,11 +25,8 @@ app.use(session({
   store: new MongoStore({
     url: config.get('mongoUri')
   }),
-  cookie: { maxAge: null, secure: true, httpOnly: true, }
+  cookie: { maxAge: null, secure: true, httpOnly: true, path: '/users/' }
 }))
-// app.use((req, res, next) => {
-//   req.session.numbers = req.session.numbers + 1 || 1;
-// })
 app.use('/users', usersRoutes);
 app.use('/quiz', quizRoutes);
 app.use('/statistics', statisticsRoutes);
