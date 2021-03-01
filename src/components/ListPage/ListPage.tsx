@@ -24,7 +24,7 @@ const ListPage = (props: Props) => {
   useEffect(() => {
     const fetchData = async () => {
       setFetching(true);
-      props.getList(props.page, props.catalog, props.currentFilter);
+      await props.getList(props.page, props.catalog, props.currentFilter);
       setFetching(false);
     }
     fetchData()

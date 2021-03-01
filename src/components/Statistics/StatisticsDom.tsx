@@ -11,7 +11,7 @@ export const StatisticsDom = (props: Props) => {
     <div className={styles.wrapper}>
       {props.quizzes && <div className={styles.statisticsWrap}>
         {props.quizzes.map((el: any, i: number) => {
-          return <div key={i} className={styles.score}><Scores quiz={el.name} /></div>
+          return <div key={i} className={styles.score}><Scores quiz={el} /></div>
         })}
       </div>}
     </div>

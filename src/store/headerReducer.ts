@@ -4,8 +4,8 @@ type headerItems = { name: string, text: string, link: string }
 const initialStates = {
   menuItems: [
     { name: 'mainPage', text: 'Главная', link: '/main' },
-    { name: 'films', text: 'фильмы', link: '/list/films' },
-    { name: 'serials', text: 'сериалы', link: '/list/serials' },
+    { name: 'films', text: 'Фильмы', link: '/list/films' },
+    { name: 'serials', text: 'Сериалы', link: '/list/serials' },
     { name: 'statistics', text: 'Статистика', link: '/statistics' },
   ] as Array<headerItems>
 }
