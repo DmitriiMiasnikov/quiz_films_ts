@@ -34,6 +34,10 @@ export const statisticsApi = {
 }
 
 export const userApi = {
+  async getIsAuth() {
+    const res = await instance.get(`users/isAuth/`);
+    return res;
+  },
   async registration(userName, password, email) {
     const res = await instance.post(`users/registration/?userName=${userName}&password=${password}&email=${email}`);
     return res;

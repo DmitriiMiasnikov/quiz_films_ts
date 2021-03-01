@@ -5,7 +5,6 @@ const validator = require("email-validator");
 const Users = require('./../models/Users');
 const router = Router();
 
-
 // регистрация нового пользователя
 // /users/registration
 router.post(
@@ -14,7 +13,7 @@ router.post(
     const userName = req.query.userName;
     const password = req.query.password;
     const email = req.query.email;
-    let err = {state: false, message: []};
+    let err = { state: false, message: [] };
     let user;
     if (userName.length < 4) {
       err.state = true;
@@ -50,7 +49,7 @@ router.get(
     try {
       const userName = req.query.userName;
       const password = req.query.password;
-      let err = {state: false, message: []};
+      let err = { state: false, message: [] };
       const user = await Users.findOne({ userName: userName, password: sha256(password) }, 'userId userName email')
       if (!user) {
         err.state = true;
@@ -77,5 +76,38 @@ router.get(
     }
   }
 )
+
+// // проверка авторизован ли
+// // /users/
+// router.get(
+//   '/isAuth/',
+//   async (req, res) => {
+//     try {
+//       let isAuth = false;
+//       let user;
+
+//       // req.session.numbers = req.session.numbers + 1 || 1
+//       // console.log(req.session.numbers);
+//       // console.log(req.sessionID);
+//       // res.send('vsits' + req.session.numbers);
+
+//       // if (!req.cookies.cookieBad) {
+//       //   let items = [];
+//       //   res.cookie('cookieBad', items, {
+//       //     expires: new Date(Date.now() + 999999),
+//       //     httpOnly: true,
+
+//       //   });
+//       // }
+//       if (isAuth) {
+//         const id = Number(req.params.id);
+//         user = await Users.findOne({ userId: id }, 'userId userName email');
+//       }
+//       res.status(200).json({ user, isAuth })
+//     } catch (e) {
+//       console.log(e)
+//     }
+//   }
+// )
 
 module.exports = router;
