@@ -5,12 +5,13 @@ import tick from './../../../assets/images/tick.svg';
 import cross from './../../../assets/images/cross.svg';
 
 type Props = {
-  quiz: any,
-  answers: any,
-  quizStat: any
+  quiz: { name: string, questions: { currect: string, image: string, options: string[] }[] },
+  answers: [boolean, number, string][],
+  quizStat: {name: string, scores: number[]}
 }
 
 export const Result = (props: Props) => {
+  console.log(props.quizStat);
   return (
     <div className={styles.wrapper}>
       <div className={styles.resultText}>

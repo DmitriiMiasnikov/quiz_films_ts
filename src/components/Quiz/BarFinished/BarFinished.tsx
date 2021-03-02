@@ -4,7 +4,7 @@ import classnames from 'classnames';
 
 type Props = {
   side: string,
-  answers: []
+  answers: any
 }
 export const BarFinished = (props: Props) => {
   const [listFinished, setListFinished] = useState([]);

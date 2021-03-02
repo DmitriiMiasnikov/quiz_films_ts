@@ -12,9 +12,6 @@ const MongoStore = require('connect-mongo')(session);
 
 const app = express();
 
-app.use(express.json({ extended: true }))
-app.use(cors());
-app.options('*', cors());
 app.use(cookieParser());
 app.set('trust proxy', 1)
 app.use(session({
@@ -22,11 +19,19 @@ app.use(session({
   name: 'sessionation',
   resave: false,
   saveUninitialized: true,
+  expires: new Date(Date.now() + (60 * 60 * 24 * 7 * 1000)),
   store: new MongoStore({
     url: config.get('mongoUri')
   }),
-  cookie: { maxAge: null, secure: true, httpOnly: true, path: '/users/' }
+  cookie: { maxAge: null, secure: true, httpOnly: true, path: '/' }
 }))
+
+app.use(express.json({ extended: true }))
+app.use(cors({
+  origin: 'http://localhost:3000',
+  credentials: true
+}));
+app.options('*', cors());
 app.use('/users', usersRoutes);
 app.use('/quiz', quizRoutes);
 app.use('/statistics', statisticsRoutes);

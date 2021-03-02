@@ -5,7 +5,18 @@ import { ProgressBar } from './ProgressBar/ProgressBar';
 import { Result } from './Result/Result';
 import { BarFinished } from './BarFinished/BarFinished';
 
-export const QuizDom = (props: any) => {
+type Props = {
+  quiz: { name: string, questions: { currect: string, image: string, options: string[] }[] },
+  answers: [boolean, number, string][],
+  isMobile: boolean,
+  step: number,
+  hidePrevImage: boolean,
+  inactiveButtons: boolean,
+  checkAnswerFunc: (answer: string, step: number, item: number, currentImage: string) => void,
+  quizStat: any
+}
+
+export const QuizDom = (props: Props) => {
   const heightQuiz = window.innerHeight - 105;
   return (
     <div className={styles.wrapper}>
