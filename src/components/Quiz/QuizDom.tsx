@@ -13,7 +13,8 @@ type Props = {
   hidePrevImage: boolean,
   inactiveButtons: boolean,
   checkAnswerFunc: (answer: string, step: number, item: number, currentImage: string) => void,
-  quizStat: any
+  quizStat: any,
+  statisticsFilm: any
 }
 
 export const QuizDom = (props: Props) => {
@@ -36,6 +37,10 @@ export const QuizDom = (props: Props) => {
             <div className={styles.imageWrap}>
               <img src={props.quiz.questions[props.step].image}
                 className={styles.image}></img>
+                <div className={styles.score}>
+                  {props.statisticsFilm && props.statisticsFilm[props.quiz.questions[props.step].currect] && 
+                    props.statisticsFilm[props.quiz.questions[props.step].currect].rightCounter}
+                </div>
             </div>
             <div className={styles.questions}>
               {

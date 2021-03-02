@@ -46,6 +46,15 @@
         .image {
           height: 100%;
         }
+        .score {
+          position: absolute;
+          right: 0px;
+          top: 0px;
+          background-color: black;
+          font-size: 15px;
+          padding: 10px;
+          box-sizing: border-box;
+        }
       }
       .questions {
         position: relative;

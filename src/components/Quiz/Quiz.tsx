@@ -3,7 +3,10 @@ import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 import { QuizDom } from './QuizDom';
 import { clear, stepUp, checkAnswer, getQuiz } from './../../store/quizReducer';
-import { setStatisticsQuiz, getStatisticsQuiz, setStatisticsFilm } from './../../store/statisticsReducer';
+import {
+  setStatisticsQuiz, getStatisticsQuiz,
+  setStatisticsFilm, getStatisticsFilm
+} from './../../store/statisticsReducer';
 
 type Props = {
   answers: [boolean, number, string][],
@@ -19,13 +22,16 @@ type Props = {
   step: number,
   stepUp: () => void,
   match: any,
-  setStatisticsFilm: (name: string, answer: string) => void
+  setStatisticsFilm: (name: string, answer: string) => void,
+  getStatisticsFilm: (name: string) => void,
+  statisticsFilm: any
 }
 const Quiz = (props: Props) => {
   const [hidePrevImage, setHidePrevImage] = useState(false);
   const [inactiveButtons, setInactiveButtons] = useState(false);
   const [quizStat, setQuizStat] = useState(null);
-  const [quiz, setQuiz] = useState({name: '', questions: [{currect: '', image: '', options: []}]});
+  const [filmStat, setFilmStat] = useState(null);
+  const [quiz, setQuiz] = useState({ name: '', questions: [{ currect: '', image: '', options: [] }] });
   const shuffleAnswers = (currentQuiz: any) => {
     const shuffleFunc = (arr: any) => arr.map((a: any) => [Math.random(), a])
       .sort((a: any, b: any) => a[0] - b[0]).map((a: any) => a[1]);
@@ -69,6 +75,14 @@ const Quiz = (props: Props) => {
       fetchData()
     }
   }, [props.step])
+  useEffect(() => {
+    if (props.step < 10 && quiz.questions[props.step].currect) {
+      const fetchData = async () => {
+        await props.getStatisticsFilm(quiz.questions[props.step].currect);
+      }
+      fetchData()
+    }
+  }, [props.step, quiz])
 
   useEffect(() => {
     if (props.statisticsQuiz && props.currentQuiz) {
@@ -105,9 +119,13 @@ const mapStatesToProps = (state: any) => {
     isMobile: state.mainSettings.isMobile,
     imagesLink: state.mainSettings.imagesLink,
     statisticsQuiz: state.statistics.statisticsQuiz,
+    statisticsFilm: state.statistics.statisticsFilm,
   }
 }
 
 export default withRouter(connect(
-  mapStatesToProps, { clear, stepUp, checkAnswer, getQuiz, setStatisticsQuiz, getStatisticsQuiz, setStatisticsFilm }
+  mapStatesToProps, {
+    clear, stepUp, checkAnswer, getQuiz, setStatisticsQuiz, getStatisticsQuiz, setStatisticsFilm,
+  getStatisticsFilm
+}
 )(Quiz));

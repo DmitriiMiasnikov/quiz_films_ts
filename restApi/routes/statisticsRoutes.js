@@ -64,4 +64,15 @@ router.get("/:name", async (req, res) => {
   }
 });
 
+// получить инфу по тесту
+router.get("/film/:name", async (req, res) => {
+  try {
+    const filmName = req.params.name;
+    let statisticsFilm = await StatisticsFilm.findOne({ name: filmName });
+    res.status(200).json({ statisticsFilm, filmName });
+  } catch (e) {
+    console.log(e);
+  }
+});
+
 module.exports = router;

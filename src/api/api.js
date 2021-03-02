@@ -35,6 +35,10 @@ export const statisticsApi = {
   async getStatisticsQuiz(name) {
     const res = await instance.get(`statistics/${name}`);
     return res
+  },
+  async getStatisticsFilm(name) {
+    const res = await instance.get(`statistics/film/${name}`);
+    return res
   }
 }
 
