@@ -1,12 +1,12 @@
 const { Router } = require("express");
 const fs = require("fs");
-const FilmByQuiz = require("../models/FilmByQuiz");
 const Statistics = require("../models/Statistics");
+const StatisticsFilm = require("../models/StatisticsFilm");
 const router = Router();
 
-// количество прохождений и оценка
+// количество прохождений и оценка теста
 // quiz/:quizName
-router.put("/:name", async (req, res) => {
+router.put("/quiz/:name", async (req, res) => {
   try {
     const quizName = req.params.name;
     const score = Number(req.query.score);
@@ -24,6 +24,31 @@ router.put("/:name", async (req, res) => {
       statistics.save();
     }
     res.status(200).json({ quiz });
+  } catch (e) {
+    console.log(e);
+  }
+});
+
+// статистика конкретного фильма
+// film/:name
+router.post("/film/:name", async (req, res) => {
+  try {
+    const name = req.params.name;
+    const answer = req.query.answer === req.params.name;
+    console.log(name, answer);
+    const film = await StatisticsFilm.findOne({ name: name });
+    const isRight = answer ? 'right' : 'wrong';
+    if (film) {
+      await StatisticsFilm.updateOne({ name: name }, { [`${isRight}Counter`]: film[`${isRight}Counter`] + 1 });
+    } else {
+      const statistics = new StatisticsFilm({
+        name: name,
+        rightCounter: answer ? 1 : 0,
+        wrongCounter: !answer ? 1 : 0
+      });
+      statistics.save();
+    }
+    res.status(200);
   } catch (e) {
     console.log(e);
   }

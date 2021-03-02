@@ -25,7 +25,12 @@ export const quizApi = {
 
 export const statisticsApi = {
   async setStatisticsQuiz(name, score) {
-    const res = await instance.put(`statistics/${name}?score=${score}`);
+    const res = await instance.put(`statistics/quiz/${name}?score=${score}`);
+    return res
+  },
+  async setStatisticsFilm(name, answer) {
+    console.log(name, answer);
+    const res = await instance.post(`statistics/film/${name}?answer=${answer}`);
     return res
   },
   async getStatisticsQuiz(name) {

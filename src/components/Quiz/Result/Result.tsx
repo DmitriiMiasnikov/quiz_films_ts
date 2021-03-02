@@ -11,7 +11,6 @@ type Props = {
 }
 
 export const Result = (props: Props) => {
-  console.log(props.quizStat);
   return (
     <div className={styles.wrapper}>
       <div className={styles.resultText}>

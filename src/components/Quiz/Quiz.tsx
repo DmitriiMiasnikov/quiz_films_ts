@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
-import { Redirect, withRouter } from 'react-router-dom';
+import { withRouter } from 'react-router-dom';
 import { QuizDom } from './QuizDom';
 import { clear, stepUp, checkAnswer, getQuiz } from './../../store/quizReducer';
-import { setStatisticsQuiz, getStatisticsQuiz } from './../../store/statisticsReducer';
+import { setStatisticsQuiz, getStatisticsQuiz, setStatisticsFilm } from './../../store/statisticsReducer';
 
 type Props = {
   answers: [boolean, number, string][],
@@ -18,13 +18,14 @@ type Props = {
   statisticsQuiz: any,
   step: number,
   stepUp: () => void,
-  match: any
+  match: any,
+  setStatisticsFilm: (name: string, answer: string) => void
 }
 const Quiz = (props: Props) => {
   const [hidePrevImage, setHidePrevImage] = useState(false);
   const [inactiveButtons, setInactiveButtons] = useState(false);
   const [quizStat, setQuizStat] = useState(null);
-  const [quiz, setQuiz] = useState({name: '', questions: []});
+  const [quiz, setQuiz] = useState({name: '', questions: [{currect: '', image: '', options: []}]});
   const shuffleAnswers = (currentQuiz: any) => {
     const shuffleFunc = (arr: any) => arr.map((a: any) => [Math.random(), a])
       .sort((a: any, b: any) => a[0] - b[0]).map((a: any) => a[1]);
@@ -77,6 +78,7 @@ const Quiz = (props: Props) => {
 
   const checkAnswerFunc = async (answer: string, step: number, item: number, currentImage: string) => {
     if (quiz) {
+      props.setStatisticsFilm(answer, quiz.questions[step].currect)
       props.checkAnswer(answer, step, item, quiz, currentImage)
       setInactiveButtons(true)
       await new Promise(res => setTimeout(res, 500))
@@ -107,5 +109,5 @@ const mapStatesToProps = (state: any) => {
 }
 
 export default withRouter(connect(
-  mapStatesToProps, { clear, stepUp, checkAnswer, getQuiz, setStatisticsQuiz, getStatisticsQuiz }
+  mapStatesToProps, { clear, stepUp, checkAnswer, getQuiz, setStatisticsQuiz, getStatisticsQuiz, setStatisticsFilm }
 )(Quiz));

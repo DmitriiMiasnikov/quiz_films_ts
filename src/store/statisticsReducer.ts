@@ -38,3 +38,9 @@ export const getStatisticsQuiz = (name: string) => {
     dispatch(getStatisticsQuizFunc(res.data.statisticsQuiz, res.data.quizName))
   }
 }
+
+export const setStatisticsFilm = (name: string, answer: string) => {
+  return async (dispatch: any) => {
+    const res = await statisticsApi.setStatisticsFilm(name, answer)
+  }
+}
