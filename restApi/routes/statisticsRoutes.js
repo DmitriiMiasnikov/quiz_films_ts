@@ -31,11 +31,10 @@ router.put("/quiz/:name", async (req, res) => {
 
 // статистика конкретного фильма
 // film/:name
-router.post("/film/:name", async (req, res) => {
+router.post("/film/", async (req, res) => {
   try {
-    const name = req.params.name;
-    const answer = req.query.answer === req.params.name;
-    console.log(name, answer);
+    const name = req.query.name;
+    const answer = req.query.answer === req.query.name;
     const film = await StatisticsFilm.findOne({ name: name });
     const isRight = answer ? 'right' : 'wrong';
     if (film) {
@@ -48,7 +47,7 @@ router.post("/film/:name", async (req, res) => {
       });
       statistics.save();
     }
-    res.status(200);
+    res.status(200).json({ answer });
   } catch (e) {
     console.log(e);
   }

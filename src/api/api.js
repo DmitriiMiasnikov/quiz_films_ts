@@ -29,8 +29,7 @@ export const statisticsApi = {
     return res
   },
   async setStatisticsFilm(name, answer) {
-    console.log(name, answer);
-    const res = await instance.post(`statistics/film/${name}?answer=${answer}`);
+    const res = await instance.post(`statistics/film/?name=${name}&answer=${answer}`);
     return res
   },
   async getStatisticsQuiz(name) {
