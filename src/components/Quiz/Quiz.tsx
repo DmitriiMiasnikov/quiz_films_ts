@@ -30,7 +30,7 @@ const Quiz = (props: Props) => {
   const [hidePrevImage, setHidePrevImage] = useState(false);
   const [inactiveButtons, setInactiveButtons] = useState(false);
   const [quizStat, setQuizStat] = useState(null);
-  const [filmStat, setFilmStat] = useState(null);
+  const [filmStat, setFilmStat] = useState([{ name: '', rightPersentage: '' }]);
   const [quiz, setQuiz] = useState({ name: '', questions: [{ currect: '', image: '', options: [] }] });
   const shuffleAnswers = (currentQuiz: any) => {
     const shuffleFunc = (arr: any) => arr.map((a: any) => [Math.random(), a])
@@ -83,6 +83,17 @@ const Quiz = (props: Props) => {
       fetchData()
     }
   }, [props.step, quiz])
+  useEffect(() => {
+    if (props.statisticsFilm) {
+      setFilmStat(Object.keys(props.statisticsFilm).map((el: any) => {
+        const item = props.statisticsFilm[el];
+        return {
+          name: el, rightPersentage: item.rightCounter && item.rightCounter + item.wrongCounter ? 
+          `${((item.rightCounter / (item.rightCounter + item.wrongCounter)) * 100).toFixed(0)}%` : '0%'
+        };
+      }))
+    }
+  }, [props.statisticsFilm])
 
   useEffect(() => {
     if (props.statisticsQuiz && props.currentQuiz) {
@@ -107,7 +118,7 @@ const Quiz = (props: Props) => {
 
   return (
     <QuizDom {...props} quiz={quiz} checkAnswerFunc={checkAnswerFunc} hidePrevImage={hidePrevImage}
-      inactiveButtons={inactiveButtons} quizStat={quizStat} />
+      inactiveButtons={inactiveButtons} quizStat={quizStat} filmStat={filmStat} />
   )
 }
 
@@ -125,7 +136,7 @@ const mapStatesToProps = (state: any) => {
 
 export default withRouter(connect(
   mapStatesToProps, {
-    clear, stepUp, checkAnswer, getQuiz, setStatisticsQuiz, getStatisticsQuiz, setStatisticsFilm,
+  clear, stepUp, checkAnswer, getQuiz, setStatisticsQuiz, getStatisticsQuiz, setStatisticsFilm,
   getStatisticsFilm
 }
 )(Quiz));

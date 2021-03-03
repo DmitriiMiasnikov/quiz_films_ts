@@ -14,7 +14,8 @@ type Props = {
   inactiveButtons: boolean,
   checkAnswerFunc: (answer: string, step: number, item: number, currentImage: string) => void,
   quizStat: any,
-  statisticsFilm: any
+  statisticsFilm: any,
+  filmStat: { name: string, rightPersentage: string }[]
 }
 
 export const QuizDom = (props: Props) => {
@@ -38,8 +39,7 @@ export const QuizDom = (props: Props) => {
               <img src={props.quiz.questions[props.step].image}
                 className={styles.image}></img>
                 <div className={styles.score}>
-                  {props.statisticsFilm && props.statisticsFilm[props.quiz.questions[props.step].currect] && 
-                    props.statisticsFilm[props.quiz.questions[props.step].currect].rightCounter}
+                  {props.filmStat && props.filmStat.find(el => el.name === props.quiz.questions[props.step].currect)?.rightPersentage}
                 </div>
             </div>
             <div className={styles.questions}>
