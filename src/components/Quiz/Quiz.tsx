@@ -5,7 +5,7 @@ import { QuizDom } from './QuizDom';
 import { clear, stepUp, checkAnswer, getQuiz } from './../../store/quizReducer';
 import {
   setStatisticsQuiz, getStatisticsQuiz,
-  setStatisticsFilm, getStatisticsFilm
+  setStatisticsFilm, getStatisticsFilm, clearStatistics
 } from './../../store/statisticsReducer';
 
 type Props = {
@@ -24,9 +24,11 @@ type Props = {
   match: any,
   setStatisticsFilm: (name: string, answer: string) => void,
   getStatisticsFilm: (name: string) => void,
-  statisticsFilm: any
+  statisticsFilm: any,
+  clearStatistics: () => void
 }
 const Quiz = (props: Props) => {
+  console.log(props.statisticsFilm);
   const [hidePrevImage, setHidePrevImage] = useState(false);
   const [inactiveButtons, setInactiveButtons] = useState(false);
   const [quizStat, setQuizStat] = useState(null);
@@ -62,7 +64,10 @@ const Quiz = (props: Props) => {
   }, [props.currentQuiz])
 
   useEffect(() => {
-    return () => props.clear()
+    return () => {
+      props.clear();
+      props.clearStatistics();
+    }
   }, [])
 
   useEffect(() => {
@@ -137,6 +142,6 @@ const mapStatesToProps = (state: any) => {
 export default withRouter(connect(
   mapStatesToProps, {
   clear, stepUp, checkAnswer, getQuiz, setStatisticsQuiz, getStatisticsQuiz, setStatisticsFilm,
-  getStatisticsFilm
+  getStatisticsFilm, clearStatistics
 }
 )(Quiz));

@@ -48,12 +48,21 @@
         }
         .score {
           position: absolute;
-          right: 0px;
-          top: 0px;
-          background-color: black;
-          font-size: 15px;
-          padding: 10px;
+          width: 45px;
+          height: 45px;
+          border-radius: 50%;
+          right: 5px;
+          top: 5px;
+          border: 3px solid #3d8848;
+          background-color: #0000009a;
+          color: #3d8848;
+          font-weight: bold;
+          font-size: 13px;
           box-sizing: border-box;
+          display: flex;
+          justify-content: center;
+          font-style: italic;
+          align-items: center;
         }
       }
       .questions {

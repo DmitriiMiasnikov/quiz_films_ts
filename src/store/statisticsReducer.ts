@@ -2,6 +2,7 @@ import { statisticsApi } from "../api/api";
 
 const GET_STATISTICS_QUIZ = 'GET_STATISTICS_QUIZ';
 const GET_STATISTICS_FILM = 'GET_STATISTICS_FILM';
+const CLEAR_STATISTICS = 'CLEAR_STATISTICS';
 
 type InitialStates = {
   statisticsQuiz: any,
@@ -25,9 +26,16 @@ export const statisticsReducer = (state = initialStates, action: any) => {
       newStat[action.filmName] = action.statisticsFilm || { name: action.filmName, rightCounter: 0, wrongCounter: 0 };
       return { ...state, statisticsFilm: newStat }
     }
+    case (CLEAR_STATISTICS): {
+      return {...initialStates };
+    }
     default: break;
   }
   return state
+}
+
+export const clearStatistics = () => {
+  return { type: CLEAR_STATISTICS }
 }
 
 const getStatisticsQuizFunc = (statisticsQuiz: any, quizName: string) => {
