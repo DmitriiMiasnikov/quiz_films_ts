@@ -28,7 +28,6 @@ type Props = {
   clearStatistics: () => void
 }
 const Quiz = (props: Props) => {
-  console.log(props.statisticsFilm);
   const [hidePrevImage, setHidePrevImage] = useState(false);
   const [inactiveButtons, setInactiveButtons] = useState(false);
   const [quizStat, setQuizStat] = useState(null);
@@ -81,7 +80,7 @@ const Quiz = (props: Props) => {
     }
   }, [props.step])
   useEffect(() => {
-    if (props.step < 10 && quiz.questions[props.step].currect) {
+    if (props.step < 10 && quiz.questions[props.step] && quiz.questions[props.step].currect) {
       const fetchData = async () => {
         await props.getStatisticsFilm(quiz.questions[props.step].currect);
       }

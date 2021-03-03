@@ -7,7 +7,8 @@ import cross from './../../../assets/images/cross.svg';
 type Props = {
   quiz: { name: string, questions: { currect: string, image: string, options: string[] }[] },
   answers: [boolean, number, string][],
-  quizStat: {name: string, scores: number[]}
+  quizStat: {name: string, scores: number[]},
+  filmStat: {name: string, rightPersentage: string}[]
 }
 
 export const Result = (props: Props) => {
@@ -23,11 +24,14 @@ export const Result = (props: Props) => {
 
       <div className={styles.list}>
         {
-          props.quiz && props.quiz.questions.map((el: unknown, i: number) => {
+          props.quiz && props.quiz.questions.map((el: any, i: number) => {
             return <div className={styles.item} key={i}>
               <div className={classnames(styles.imageWrap)}>
                 <img src={props.answers[i][2]} className={styles.image}></img>
                 {props.answers[i][0] && <div className={styles.right}><img src={tick} className={styles.image} /></div>}
+                {<div className={styles.score}>
+                  {props.filmStat && props.filmStat.find(item => item.name === el.currect)?.rightPersentage}
+                </div>}
               </div>
               <div className={styles.questions}>
                 {

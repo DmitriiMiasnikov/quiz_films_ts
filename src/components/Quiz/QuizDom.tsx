@@ -63,7 +63,7 @@ export const QuizDom = (props: Props) => {
         {
           props.quiz && props.step === props.quiz.questions.length && (
             <div className={styles.resultWrap}>
-              <Result answers={props.answers} quiz={props.quiz} quizStat={props.quizStat}/>
+              <Result answers={props.answers} quiz={props.quiz} quizStat={props.quizStat} filmStat={props.filmStat}/>
             </div>
           )
         }

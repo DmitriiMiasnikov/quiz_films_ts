@@ -32,10 +32,9 @@
         background-color: rgb(29, 29, 29);
         border-bottom-left-radius: 12px;
         border-top-left-radius: 12px;
-        .right {
+        .right, .score {
           position: absolute;
           top: 5px;
-          left: 5px;
           width: 40px;
           height: 40px;
           background-color: #000000c2;
@@ -45,9 +44,19 @@
           justify-content: center;
           box-sizing: border-box;
           border: 3px solid #3d8848;
-          .image {
-            width: 20px;
-            height: 20px;
+          &.right {
+            left: 5px;
+            .image {
+              width: 20px;
+              height: 20px;
+            }
+          }
+          &.score {
+            right: 5px;
+            color: #3d8848;
+            font-weight: bold;
+            font-size: 12px;
+            font-style: italic;
           }
         }
         .image {
