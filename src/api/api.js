@@ -1,8 +1,7 @@
 import * as axios from 'axios';
 
 const instance = axios.create({
-  baseURL: 'http://localhost:5000/',
-  withCredentials: true
+  baseURL: 'https://quiz-api-27.herokuapp.com/'
 })
 
 export const listApi = {
